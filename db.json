@@ -1,0 +1,64 @@
+{
+    "users": [
+        {
+            "name": "tomer kux",
+            "email": "tomer.kux@gmail.com",
+            "password": "noam_tomer",
+            "role": "nonbussines",
+            "id": 1
+        },
+        {
+            "name": "gilad kux",
+            "email": "gilad.kux@gmail.com",
+            "password": "noam_tomer",
+            "role": "bussines",
+            "id": 2
+        },
+        {
+            "name": "noam kux",
+            "email": "noam.kux@gmail.com",
+            "password": "noam_tomer",
+            "role": "admin",
+            "id": 3
+
+        }
+    ],
+    "products": [
+        {
+            "id": 1,
+            "name": "Microsoft Earphones",
+            "price": 80,
+            "category": "Headphones",
+            "description": "The Microsoft new earphones with high quality",
+            "image": "images/Microsoft_Earphones.jpg",
+            "quantity": 5
+        },
+        {
+            "id": 2,
+            "name": "Microsoft Headphones",
+            "price": 200,
+            "category": "Headphones",
+            "description": "The Microsoft new headphones with high quality",
+            "image": "/images/Microsoft_Headset.jpg",
+            "quantity": 1
+        },
+        {
+            "name": "asf",
+            "price": 5,
+            "description": "asd",
+            "category": "fasfas",
+            "image": "fasfasff",
+            "number": -1,
+            "decription": "f",
+            "id": 3
+        },
+        {
+            "name": "asfaa",
+            "price": 5,
+            "description": "asd",
+            "category": "fasfas",
+            "image": "fasfasff",
+            "id": 4
+        }
+    ]
+}
