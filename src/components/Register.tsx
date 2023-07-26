@@ -2,13 +2,16 @@ import { useFormik } from "formik";
 import { FunctionComponent } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { successMsg, errorMsg } from "../services/feedbackService";
-import { checkUser } from "../services/userServices";
+import { addUser, checkUser } from "../services/userServices";
 import * as yup from "yup";
 import User from "../interfaces/user";
 
-interface RegisterProps {}
+interface RegisterProps {
+  userInfo: User;
+  setUserInfo: Function;
+}
 
-const Register: FunctionComponent<RegisterProps> = () => {
+const Register: FunctionComponent<RegisterProps> = (userInfo, setUserInfo) => {
   let navigate = useNavigate();
   let formik = useFormik({
     initialValues: {
@@ -25,6 +28,7 @@ const Register: FunctionComponent<RegisterProps> = () => {
       state: "",
       street: "",
       houseNumber: "",
+      role: "",
     },
     validationSchema: yup.object({
       email: yup.string().required().email("Invalid email"),
@@ -51,24 +55,30 @@ const Register: FunctionComponent<RegisterProps> = () => {
       city: yup.string().min(2).required(),
       houseNumber: yup.number().required(),
       zipCode: yup.number().min(2),
+      role: yup.string(),
     }),
     onSubmit: (values: User) => {
-      checkUser(values)
-        .then((res) => {
-          if (res.data.length) {
-            navigate("/home");
-            successMsg(`Welcom ${res.data[0].name}`);
-            sessionStorage.setItem(
-              "userInfo",
-              JSON.stringify({
-                email: res.data[0].email,
-                role: res.data[0].role,
-                userId: res.data[0].id,
-              })
-            );
-          } else errorMsg("Acount Not Found");
-        })
-        .catch((err) => console.log(err));
+      checkUser(values).then((res) => {
+        if (res.data.length) {
+          errorMsg("user Already Exsist");
+        } else {
+          if (values.role?.toString() == "true") {
+            values.role = "business";
+          } else values.role = "nonbusiness";
+          addUser(values);
+          navigate("/home");
+          successMsg(`Welcom ${values.firstName} ${values.lastName}`);
+          setUserInfo(values)
+          sessionStorage.setItem(
+            "userInfo",
+            JSON.stringify({
+              email: values.email,
+              role: values.role,
+              userId: values.id,
+            })
+          );
+        }
+      });
     },
   });
   return (
@@ -76,7 +86,6 @@ const Register: FunctionComponent<RegisterProps> = () => {
       <div className="w-50 container">
         <form onSubmit={formik.handleSubmit} className="text-center">
           <h3 className="display-3 container text-center">Register</h3>
-
           <div className="row mb-3">
             <div className="g-2 form-floating col-6">
               <input
@@ -108,7 +117,6 @@ const Register: FunctionComponent<RegisterProps> = () => {
               <label htmlFor="floatingPassword">middle name</label>
             </div>
           </div>
-
           <div className="row mb-3">
             <div className="g-2 form-floating col-6">
               <input
@@ -143,7 +151,6 @@ const Register: FunctionComponent<RegisterProps> = () => {
               )}
             </div>
           </div>
-
           <div className="row mb-3">
             <div className="g-2 form-floating col-6">
               <input
@@ -178,7 +185,6 @@ const Register: FunctionComponent<RegisterProps> = () => {
               )}
             </div>
           </div>
-
           <div className="row mb-3">
             <div className="g-2 form-floating col-6">
               <input
@@ -191,7 +197,7 @@ const Register: FunctionComponent<RegisterProps> = () => {
                 value={formik.values.imageURL}
                 onBlur={formik.handleBlur}
               />
-              
+
               <label htmlFor="floatingInputImageURL">image URL</label>
             </div>
             <div className=" g-2 form-floating col-6">
@@ -205,11 +211,10 @@ const Register: FunctionComponent<RegisterProps> = () => {
                 value={formik.values.imageAlt}
                 onBlur={formik.handleBlur}
               ></input>
-              
+
               <label htmlFor="floatingInputImageALT">image ALT</label>
             </div>
           </div>
-
           <div className="row mb-3">
             <div className="g-2 form-floating col-6">
               <input
@@ -222,7 +227,7 @@ const Register: FunctionComponent<RegisterProps> = () => {
                 value={formik.values.state}
                 onBlur={formik.handleBlur}
               />
-              
+
               <label htmlFor="floatingInputState">State</label>
             </div>
             <div className=" g-2 form-floating col-6">
@@ -242,7 +247,6 @@ const Register: FunctionComponent<RegisterProps> = () => {
               )}
             </div>
           </div>
-
           <div className="row mb-3">
             <div className="g-2 form-floating col-6">
               <input
@@ -277,7 +281,6 @@ const Register: FunctionComponent<RegisterProps> = () => {
               )}
             </div>
           </div>
-
           <div className="row mb-3">
             <div className="g-2 form-floating col-6">
               <input
@@ -306,9 +309,28 @@ const Register: FunctionComponent<RegisterProps> = () => {
                 value={formik.values.zipCode}
                 onBlur={formik.handleBlur}
               ></input>
-              
+
               <label htmlFor="zipCode">zip Code</label>
             </div>
+          </div>
+          <div
+            className="form-check "
+            style={{
+              inlineSize: "fit-content",
+            }}
+          >
+            <label className="form-check-label" htmlFor="flexCheckDefault">
+              Register As Buissness
+            </label>
+            <input
+              className="form-check-input"
+              type="checkbox"
+              name="role"
+              id="flexCheckDefault"
+              onChange={formik.handleChange}
+              value={formik.values.role}
+              onBlur={formik.handleBlur}
+            />
           </div>
 
           <button
@@ -319,7 +341,6 @@ const Register: FunctionComponent<RegisterProps> = () => {
             Register
           </button>
         </form>
-
         <Link to="/">
           <p className="text-center mt-3">Already user? Login here</p>
         </Link>

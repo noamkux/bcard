@@ -4,10 +4,14 @@ import { Link, useNavigate } from "react-router-dom";
 import * as yup from "yup";
 import { checkUser } from "../services/userServices";
 import { successMsg, errorMsg } from "../services/feedbackService";
+import User from "../interfaces/user";
 
-interface LoginProps {}
+interface LoginProps {
+  userInfo: User;
+  setUserInfo: Function;
+}
 
-const Login: FunctionComponent<LoginProps> = () => {
+const Login: FunctionComponent<LoginProps> = (userInfo, setUserInfo) => {
   let navigate = useNavigate();
   let formik = useFormik({
     initialValues: { email: "", password: "" },
@@ -32,6 +36,7 @@ const Login: FunctionComponent<LoginProps> = () => {
                 userId : res.data[0].id
               })
             );
+            setUserInfo(values)
           } else errorMsg("Acount Not Found");
         })
         .catch((err) => console.log(err));

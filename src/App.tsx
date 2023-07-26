@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import logo from "./logo.svg";
 import "./App.css";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
@@ -14,15 +14,20 @@ import Sandbox from "./components/Sandbox";
 import NavBar from "./components/NavBar";
 
 function App() {
+  let [userInfo, setUserInfo] = useState(
+    JSON.parse(sessionStorage.getItem("userInfo") as string) == null
+      ? { email: false, isAdmin: false }
+      : JSON.parse(sessionStorage.getItem("userInfo") as string)
+  );  
   return (
     <>
       <ToastContainer></ToastContainer>
       <Router>
-        <NavBar></NavBar>
+      <NavBar userInfo={userInfo} setUserInfo={setUserInfo}/>
         <Routes>
-          <Route path="/" element={<Login/>}/>
+          <Route path="/" element={<Login userInfo={userInfo} setUserInfo={setUserInfo}/>}/>
           <Route path="/home" element={<Home />} />
-          <Route path="/register" element={<Register />} />
+          <Route path="/register" element={<Register userInfo={userInfo} setUserInfo={setUserInfo} />} />
           <Route path="/about" element={<About/>} />
           <Route path="/favcards" element={<FavCards/>} />
           <Route path="/mycards" element={<MyCards/>} />

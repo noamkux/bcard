@@ -1,16 +1,20 @@
 import { FunctionComponent } from "react";
 import { NavLink } from "react-router-dom";
+import User from "../interfaces/user";
 
-interface NavBarProps {}
+interface NavBarProps {
+  userInfo: User;
+  setUserInfo: Function;
+}
 
-const NavBar: FunctionComponent<NavBarProps> = () => {
+const NavBar: FunctionComponent<NavBarProps> = (userInfo, setUserInfo) => {
+  
   return (
     <>
       <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
-        
         <NavLink className="navbar-brand" to={"/home"}>
           BCARD
-        </NavLink>{" "}
+        </NavLink>
         <>
           <button
             className="navbar-toggler"
@@ -31,28 +35,57 @@ const NavBar: FunctionComponent<NavBarProps> = () => {
                   ABOUT <span className="sr-only">(current)</span>
                 </NavLink>
               </li>
-              <li className="nav-item">
-                <NavLink className="nav-link" to={"/favcards"}>
-                  FAVCARDS
-                </NavLink>
-              </li>
-              <li className="nav-item">
-                <NavLink className="nav-link" to={"/mycards"}>
-                  MYCARDS
-                </NavLink>
-              </li>
-              <li className="nav-item">
-                <NavLink className="nav-link" to={"/sandbox"}>
-                  SANDBOX
-                </NavLink>
-              </li>
-              
+
+              {userInfo.userInfo.email && (
+                <>
+                  <li className="nav-item">
+                    <NavLink className="nav-link" to={"/favcards"}>
+                      FAVCARDS
+                    </NavLink>
+                  </li>
+                  <li className="nav-item">
+                    <NavLink className="nav-link" to={"/mycards"}>
+                      MYCARDS
+                    </NavLink>
+                  </li>
+                </>
+              )}
+              {userInfo.userInfo.role == "admin" && (
+                <li className="nav-item">
+                  <NavLink className="nav-link" to={"/sandbox"}>
+                    SANDBOX
+                  </NavLink>
+                </li>
+              )}
             </ul>
-            <form className="d-flex" role="search">
-        <button className="btn btn-outline-primary" type="submit">LOGOUT</button>
-      </form>
           </div>
         </>
+
+        <form className="d-flex" role="search">
+          {userInfo.userInfo.email && (
+            <>
+              <button className="btn btn-outline-primary me-3" type="submit">
+                LOGOUT
+              </button>
+            </>
+          )}
+          {!userInfo.userInfo.email &&
+          <>
+          <NavLink to={"/register"} className="btn btn-outline-primary me-3" type="submit">
+            SignUp
+          </NavLink>
+        </>
+          }
+          {(userInfo.userInfo.role == "business" ||
+            userInfo.userInfo.role == "nonbusiness" ||
+            userInfo.userInfo.role == "admin") && (
+            <div className="nav-link text-white me-3 pt-1">
+              <NavLink className="nav-link" to={"/sandbox"}>
+                Profile
+              </NavLink>
+            </div>
+          )}
+        </form>
       </nav>
     </>
   );
