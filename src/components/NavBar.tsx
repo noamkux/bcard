@@ -1,18 +1,25 @@
 import { FunctionComponent } from "react";
-import { NavLink } from "react-router-dom";
-import User from "../interfaces/user";
+import { NavLink, useNavigate } from "react-router-dom";
 
 interface NavBarProps {
-  userInfo: User;
+  userInfo: any;
   setUserInfo: Function;
 }
 
-const NavBar: FunctionComponent<NavBarProps> = (userInfo, setUserInfo) => {
-  
+const NavBar: FunctionComponent<NavBarProps> = ({userInfo, setUserInfo}) => {
+  let navigate = useNavigate();
+
+  let handleLogout = () => {
+    setUserInfo("");
+    sessionStorage.removeItem("userInfo");
+    navigate("/");
+  };
+
+
   return (
     <>
       <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
-        <NavLink className="navbar-brand" to={"/home"}>
+        <NavLink className="navbar-brand" to={"/"}>
           BCARD
         </NavLink>
         <>
@@ -36,13 +43,20 @@ const NavBar: FunctionComponent<NavBarProps> = (userInfo, setUserInfo) => {
                 </NavLink>
               </li>
 
-              {userInfo.userInfo.email && (
+              {(userInfo.role === "business" ||
+                userInfo.role === "nonbusiness" ||
+                userInfo.role === "admin") && (
                 <>
                   <li className="nav-item">
                     <NavLink className="nav-link" to={"/favcards"}>
                       FAVCARDS
                     </NavLink>
                   </li>
+                </>
+              )}
+              {(userInfo.role === "business" ||
+                userInfo.role === "admin") && (
+                <>
                   <li className="nav-item">
                     <NavLink className="nav-link" to={"/mycards"}>
                       MYCARDS
@@ -50,7 +64,8 @@ const NavBar: FunctionComponent<NavBarProps> = (userInfo, setUserInfo) => {
                   </li>
                 </>
               )}
-              {userInfo.userInfo.role == "admin" && (
+
+              {userInfo.role === "admin" && (
                 <li className="nav-item">
                   <NavLink className="nav-link" to={"/sandbox"}>
                     SANDBOX
@@ -62,25 +77,41 @@ const NavBar: FunctionComponent<NavBarProps> = (userInfo, setUserInfo) => {
         </>
 
         <form className="d-flex" role="search">
-          {userInfo.userInfo.email && (
+          {userInfo.email && (
             <>
-              <button className="btn btn-outline-primary me-3" type="submit">
-                LOGOUT
+              <button
+                className="btn btn-outline-primary me-3"
+                type="submit"
+                onClick={handleLogout}
+              >
+                log-out
               </button>
             </>
           )}
-          {!userInfo.userInfo.email &&
-          <>
-          <NavLink to={"/register"} className="btn btn-outline-primary me-3" type="submit">
-            SignUp
-          </NavLink>
-        </>
-          }
-          {(userInfo.userInfo.role == "business" ||
-            userInfo.userInfo.role == "nonbusiness" ||
-            userInfo.userInfo.role == "admin") && (
+          {!userInfo.email && (
+            <>
+              <NavLink
+                to={"/register"}
+                className="btn btn-outline-primary me-3"
+                type="submit"
+              >
+                Sign-Up
+              </NavLink>
+              
+              <NavLink
+                to={"/login"}
+                className="btn btn-outline-primary me-3"
+                type="submit"
+              >
+                Login
+              </NavLink>
+            </>
+          )}
+          {(userInfo.role === "business" ||
+            userInfo.role === "nonbusiness" ||
+            userInfo.role === "admin") && (
             <div className="nav-link text-white me-3 pt-1">
-              <NavLink className="nav-link" to={"/sandbox"}>
+              <NavLink className="nav-link" to={"/profile"}>
                 Profile
               </NavLink>
             </div>

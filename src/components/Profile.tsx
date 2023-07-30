@@ -1,14 +1,19 @@
-import { FunctionComponent } from "react";
+import { FunctionComponent, useEffect } from "react";
+import { getUserByEmail } from "../services/userServices";
+import User from "../interfaces/user";
 
 interface ProfileProps {
-    
+  userInfo: any;
 }
- 
-const Profile: FunctionComponent<ProfileProps> = () => {
+
+const Profile: FunctionComponent<ProfileProps> = ({userInfo}) => {
+
+  
   return (
     <>
-     This is Profile 
+    <p>{userInfo.email}</p>
     </>
-)}
- 
+  );
+};
+
 export default Profile;

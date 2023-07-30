@@ -11,7 +11,7 @@ interface LoginProps {
   setUserInfo: Function;
 }
 
-const Login: FunctionComponent<LoginProps> = (userInfo, setUserInfo) => {
+const Login: FunctionComponent<LoginProps> = ({userInfo, setUserInfo}) => {
   let navigate = useNavigate();
   let formik = useFormik({
     initialValues: { email: "", password: "" },
@@ -26,17 +26,21 @@ const Login: FunctionComponent<LoginProps> = (userInfo, setUserInfo) => {
       checkUser(values)
         .then((res) => {
           if (res.data.length) {
-            navigate("/home");
-            successMsg(`Welcom ${res.data[0].name}`);
+            successMsg(`Welcom back ${res.data[0].firstName} ${res.data[0].lastName}`);            
             sessionStorage.setItem(
               "userInfo",
               JSON.stringify({
                 email: res.data[0].email,
                 role: res.data[0].role,
-                userId : res.data[0].id
+                userId: res.data[0].id,
               })
             );
-            setUserInfo(values)
+
+            navigate("/");
+            setUserInfo(
+              JSON.parse(sessionStorage.getItem("userInfo") as string)
+            );
+
           } else errorMsg("Acount Not Found");
         })
         .catch((err) => console.log(err));
@@ -87,7 +91,7 @@ const Login: FunctionComponent<LoginProps> = (userInfo, setUserInfo) => {
             </button>
           </div>
         </form>
-        
+
         <Link to="/register">
           <p className="text-center mt-3">New user? Register here</p>
         </Link>

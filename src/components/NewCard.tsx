@@ -1,159 +1,176 @@
 import { useFormik } from "formik";
-import { FunctionComponent } from "react";
+import { FunctionComponent, useEffect, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { successMsg, errorMsg } from "../services/feedbackService";
-import { addUser, checkUser } from "../services/userServices";
 import * as yup from "yup";
 import User from "../interfaces/user";
+import { getUserByEmail, getUserByid } from "../services/userServices";
+import Card from "../interfaces/card";
+import { postNewCard } from "../services/cardService";
 
-interface RegisterProps {
-  userInfo: User;
-  setUserInfo: Function;
+interface NewCardProps {
+  userInfo: any;
 }
 
-const Register: FunctionComponent<RegisterProps> = ({
-  userInfo,
-  setUserInfo,
-}) => {
+const NewCard: FunctionComponent<NewCardProps> = ({ userInfo }) => {
+  const date = new Date();
+
+  let day = date.getDate();
+  let month = date.getMonth() + 1;
+  let year = date.getFullYear();
+
+  let currentDate = `${day}-${month}-${year}`;
+
   let navigate = useNavigate();
+
   let formik = useFormik({
     initialValues: {
       email: "",
-      password: "",
-      firstName: "",
-      middleName: "",
-      lastName: "",
+      title: "",
+      subtitle: "",
+      description: "",
+      country: "",
       phone: "",
-      imageURL: "",
-      imageAlt: "",
+      businessImgURL: "",
+      businessImgAlt: "",
       city: "",
-      zipCode: "",
+      zipcode: "",
       state: "",
       street: "",
       houseNumber: "",
-      role: "",
+      webSite: "",
+      postDate: "",
     },
     validationSchema: yup.object({
       email: yup.string().required().email("Invalid email"),
-      password: yup
+      title: yup.string().required(),
+      subtitle: yup
         .string()
         .required()
-        .min(8, "Too short! Password should be at least 8 characters"),
-      firstName: yup
+        .min(5, "Too short! subtitle should be at least 5 characters"),
+      description: yup
         .string()
-        .required()
-        .min(2, "Too short! First Name should be at least 2 characters"),
-      middleName: yup
-        .string()
-        .min(2, "Too short! middle Name should be at least 2 characters"),
-      lastName: yup
-        .string()
-        .required()
-        .min(2, "Too short! last Name should be at least 2 characters"),
+        .min(20, "Too short! description should be at least 20 characters"),
       phone: yup.string().required().min(2),
-      imageURL: yup.string().min(2),
-      imageAlt: yup.string().min(2),
+      businessImgURL: yup.string().min(2),
+      businessImgAlt: yup.string().min(2),
       state: yup.string().min(2),
       country: yup.string().min(3).required(),
       city: yup.string().min(2).required(),
-      houseNumber: yup.number().required(),
-      zipCode: yup.number().min(2),
-      role: yup.string(),
+      houseNumber: yup.number().required().typeError("A number is required"),
+      zipcode: yup.number().min(2),
+      website: yup.string(),
     }),
-    onSubmit: (values: User) => {
-      checkUser(values).then((res) => {
-        if (res.data.length) {
-          errorMsg("user Already Exsist");
-        } else {
-          if (values.role?.toString() == "true") {
-            values.role = "business";
-          } else values.role = "nonbusiness";
-          addUser(values);
+    onSubmit: (values: Card) => {
+      postNewCard({
+        ...values,
+        postDate: currentDate,
+        ownerId: userInfo.userId,
+      })
+        .then((res) => {
+          successMsg(`card number ${res.data.id} has added to your cards`);
           navigate("/");
-          successMsg(`Welcom ${values.firstName} ${values.lastName}`);
-          setUserInfo(values);
-          sessionStorage.setItem(
-            "userInfo",
-            JSON.stringify({
-              email: values.email,
-              role: values.role,
-              userId: values.id,
-            })
-          );
-        }
-      });
+        })
+        .catch((err) => {
+          console.log(err);
+          errorMsg("something went wrong");
+        });
     },
   });
   return (
     <>
       <div className="w-50 container">
         <form onSubmit={formik.handleSubmit} className="text-center">
-          <h3 className="display-3 container text-center">Register</h3>
+          <h3 className="display-3 container text-center">Add new card</h3>
+          <hr className="hr" />
+          <h4 className="display-6">Card Details</h4>
           <div className="row mb-3">
             <div className="g-2 form-floating col-6">
               <input
                 type="text"
-                name="firstName"
+                name="title"
                 className="form-control"
-                id="floatingInputFirstName"
+                id="floatingInputtitle"
                 placeholder="israel"
                 onChange={formik.handleChange}
-                value={formik.values.firstName}
+                value={formik.values.title}
                 onBlur={formik.handleBlur}
               />
-              <label htmlFor="floatingInputFirstName">First Name*</label>
-              {formik.touched.firstName && formik.errors.firstName && (
-                <p className="text-danger">{formik.errors.firstName}</p>
+              <label htmlFor="floatingInputtitle">title *</label>
+              {formik.touched.title && formik.errors.title && (
+                <p className="text-danger">{formik.errors.title}</p>
               )}
             </div>
             <div className=" g-2 form-floating col-6">
               <input
-                name="middleName"
+                name="subtitle"
                 type="text"
                 className="form-control"
-                id="floatingPasswordMiddleName"
-                placeholder="Password"
+                id="floatingSubtitle"
+                placeholder="subtitle"
                 onChange={formik.handleChange}
-                value={formik.values.middleName}
+                value={formik.values.subtitle}
                 onBlur={formik.handleBlur}
               ></input>
-              <label htmlFor="floatingPassword">middle name</label>
+              <label htmlFor="floatingSubtitle">subtitle *</label>
+              {formik.touched.subtitle && formik.errors.subtitle && (
+                <p className="text-danger">{formik.errors.subtitle}</p>
+              )}
             </div>
           </div>
+          <div className="row mb-3">
+            <div className="g-2 form-floating col-12">
+              <textarea
+                style={{ height: "10rem" }}
+                name="description"
+                className="form-control"
+                id="floatingInputdescription"
+                placeholder="israel"
+                onChange={formik.handleChange}
+                value={formik.values.description}
+                onBlur={formik.handleBlur}
+              />
+              <label htmlFor="floatingInputdescription">description*</label>
+              {formik.touched.description && formik.errors.description && (
+                <p className="text-danger">{formik.errors.description}</p>
+              )}
+            </div>
+          </div>
+
           <div className="row mb-3">
             <div className="g-2 form-floating col-6">
               <input
                 type="text"
-                name="lastName"
+                name="businessImgURL"
                 className="form-control"
-                id="floatingInputLastName"
-                placeholder="israel"
+                id="floatingInputImgURL"
+                placeholder="Image Url"
                 onChange={formik.handleChange}
-                value={formik.values.lastName}
+                value={formik.values.businessImgURL}
                 onBlur={formik.handleBlur}
               />
-              <label htmlFor="floatingInputLastName">Last Name*</label>
-              {formik.touched.lastName && formik.errors.lastName && (
-                <p className="text-danger">{formik.errors.lastName}</p>
-              )}
+
+              <label htmlFor="floatingInputImageURL">image URL</label>
             </div>
             <div className=" g-2 form-floating col-6">
               <input
-                name="phone"
-                type="tel"
+                type="text"
+                name="businessImgAlt"
                 className="form-control"
-                id="floatingNumber"
-                placeholder="+97252000000"
+                id="businessImgAlt"
+                placeholder="ImageAlt"
                 onChange={formik.handleChange}
-                value={formik.values.phone}
+                value={formik.values.businessImgAlt}
                 onBlur={formik.handleBlur}
               ></input>
-              <label htmlFor="floatingNumber">Phone Number*</label>
-              {formik.touched.phone && formik.errors.phone && (
-                <p className="text-danger">{formik.errors.phone}</p>
-              )}
+
+              <label htmlFor="businessImageAlt">image ALT</label>
             </div>
           </div>
+
+          <h4 className="display-6">Business Details</h4>
+          <hr className="hr" />
+
           <div className="row mb-3">
             <div className="g-2 form-floating col-6">
               <input
@@ -173,49 +190,19 @@ const Register: FunctionComponent<RegisterProps> = ({
             </div>
             <div className=" g-2 form-floating col-6">
               <input
-                name="password"
-                type="password"
+                name="webSite"
+                type="webSite"
                 className="form-control"
-                id="floatingPassword"
-                placeholder="Password"
+                id="floatingwebSite"
+                placeholder="webSite"
                 onChange={formik.handleChange}
-                value={formik.values.password}
+                value={formik.values.webSite}
                 onBlur={formik.handleBlur}
               ></input>
-              <label htmlFor="floatingPassword">Password*</label>
-              {formik.touched.password && formik.errors.password && (
-                <p className="text-danger">{formik.errors.password}</p>
+              <label htmlFor="floatingwebSite">webSite *</label>
+              {formik.touched.webSite && formik.errors.webSite && (
+                <p className="text-danger">{formik.errors.webSite}</p>
               )}
-            </div>
-          </div>
-          <div className="row mb-3">
-            <div className="g-2 form-floating col-6">
-              <input
-                type="text"
-                name="imageURL"
-                className="form-control"
-                id="floatingInputImageURL"
-                placeholder="Image Url"
-                onChange={formik.handleChange}
-                value={formik.values.imageURL}
-                onBlur={formik.handleBlur}
-              />
-
-              <label htmlFor="floatingInputImageURL">image URL</label>
-            </div>
-            <div className=" g-2 form-floating col-6">
-              <input
-                name="imageAlt"
-                type="text"
-                className="form-control"
-                id="imageAlt"
-                placeholder="Image Alt"
-                onChange={formik.handleChange}
-                value={formik.values.imageAlt}
-                onBlur={formik.handleBlur}
-              ></input>
-
-              <label htmlFor="floatingInputImageALT">image ALT</label>
             </div>
           </div>
           <div className="row mb-3">
@@ -303,53 +290,56 @@ const Register: FunctionComponent<RegisterProps> = ({
             </div>
             <div className=" g-2 form-floating col-6">
               <input
-                name="zipCode"
+                name="zipcode"
                 type="text"
                 className="form-control"
-                id="zipCode"
+                id="zipcode"
                 placeholder="Image Alt"
                 onChange={formik.handleChange}
-                value={formik.values.zipCode}
+                value={formik.values.zipcode}
                 onBlur={formik.handleBlur}
               ></input>
 
-              <label htmlFor="zipCode">zip Code</label>
+              <label htmlFor="zipcode">zip Code</label>
             </div>
           </div>
+          <div className="row mb-3">
+            <div className=" g-2 form-floating col-12">
+              <input
+                name="phone"
+                type="tel"
+                className="form-control"
+                id="floatingNumber"
+                placeholder="+97252000000"
+                onChange={formik.handleChange}
+                value={formik.values.phone}
+                onBlur={formik.handleBlur}
+              ></input>
+              <label htmlFor="floatingNumber">Phone Number*</label>
+              {formik.touched.phone && formik.errors.phone && (
+                <p className="text-danger">{formik.errors.phone}</p>
+              )}
+            </div>
+          </div>
+
           <div
             className="form-check "
             style={{
               inlineSize: "fit-content",
             }}
-          >
-            <label className="form-check-label" htmlFor="flexCheckDefault">
-              Register As Buissness
-            </label>
-            <input
-              className="form-check-input"
-              type="checkbox"
-              name="role"
-              id="flexCheckDefault"
-              onChange={formik.handleChange}
-              value={formik.values.role}
-              onBlur={formik.handleBlur}
-            />
-          </div>
+          ></div>
 
           <button
             type="submit"
-            className="btn btn-success mt-4 w-100"
+            className="btn btn-success mt-4 w-100 mb-5"
             disabled={!formik.isValid || !formik.dirty}
           >
-            Register
+            Post a new card
           </button>
         </form>
-        <Link to="/login">
-          <p className="text-center mt-3">Already user? Login here</p>
-        </Link>
       </div>
     </>
   );
 };
 
-export default Register;
+export default NewCard;

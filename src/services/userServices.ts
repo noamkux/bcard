@@ -9,6 +9,10 @@ export function checkUser(userToCheck: User) {
   );
 }
 
+export function getUserByid(id: number) {
+  return axios.get(`${api}/${id}`);
+}
+
 export function addUser(userToAdd: User) {
   return axios.post(api, userToAdd);
 }
@@ -20,4 +24,3 @@ export function deleteUser(idToDelete: number) {
 export function getUserByEmail(email: string) {
   return axios.get(`${api}?email=${email}`);
 }
-
