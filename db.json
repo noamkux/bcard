@@ -55,6 +55,25 @@
       "postDate": "17-6-2022"
     },
     {
+      "id": 2,
+      "ownerId": 3,
+      "title": "Plumber",
+      "subtitle": "Young and vigorous plumber",
+      "description": "Hi, my name is Gilad, I am a diligent gardener and I would be happy to come and improve the beauty of your garden",
+      "phone": "0525433577",
+      "email": "gilad.kux@gmail.com",
+      "webSite": "www.giladthegardener.com",
+      "businessImgURL": "./images/CardsImg/giladThePlumber.jpg",
+      "businessImgAlt": "a Gradner Working",
+      "country": "USA",
+      "state": "",
+      "city": "New York, Brooklyn",
+      "street": "High Court",
+      "houseNumber": "53",
+      "zipcode": "9777530",
+      "postDate": "17-6-2022"
+    },
+    {
       "id": 3,
       "ownerId": 3,
       "title": "FullStack web dev",

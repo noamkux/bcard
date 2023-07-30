@@ -19,7 +19,7 @@ const NavBar: FunctionComponent<NavBarProps> = ({userInfo, setUserInfo}) => {
   return (
     <>
       <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
-        <NavLink className="navbar-brand" to={"/"}>
+        <NavLink className="navbar-brand ms-1" to={"/"}>
           BCARD
         </NavLink>
         <>

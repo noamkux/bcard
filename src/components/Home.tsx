@@ -75,7 +75,7 @@ const Home: FunctionComponent<HomeProps> = ({ userInfo }) => {
                     <div className="card-footer text-center">
                       Address :{card.city}, {card.street} {card.houseNumber},{" "}
                       {card.country}
-                    </div>
+                    
                     <div className="text-center mt-1">
                       {(userInfo.role === "admin" ||
                         userInfo.userId === card.ownerId) && (
@@ -91,6 +91,7 @@ const Home: FunctionComponent<HomeProps> = ({ userInfo }) => {
                       <Link to={`tel:${card.phone}`} style={{ color: "black" }}>
                         <i className="fa-solid fa-phone col-4"></i>
                       </Link>
+                    </div>
                     </div>
                   </div>
                 </div>

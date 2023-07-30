@@ -3,8 +3,6 @@ import { FunctionComponent, useEffect, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { successMsg, errorMsg } from "../services/feedbackService";
 import * as yup from "yup";
-import User from "../interfaces/user";
-import { getUserByEmail, getUserByid } from "../services/userServices";
 import Card from "../interfaces/card";
 import { postNewCard } from "../services/cardService";
 
