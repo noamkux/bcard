@@ -34,8 +34,8 @@ const FavCards: FunctionComponent<FavCardsProps> = ({ userInfo }) => {
   }, [dataUpdated]);
 
   return (
-    <>
-      <div className="mx-5 mb-4 text-center">
+    <div className="component-container">
+      <div className="mx-5 mb-4 text-center header">
         <h1 className="display-1">My favorites cards</h1>
         <p className="display-6 fs-4">
           Here you can find the business and services you marked as favorites,
@@ -99,7 +99,7 @@ const FavCards: FunctionComponent<FavCardsProps> = ({ userInfo }) => {
           )}
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

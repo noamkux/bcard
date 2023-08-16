@@ -10,6 +10,7 @@
 
 .App{
     background-color: var(--color-primary);
+    
 }
 
 .dark .card{
@@ -35,4 +36,12 @@ background-color: var(--color-primary);
 
 .dark .card-footer{
     color: var(--text-color-secondery);
+}
+
+.hr-dark{
+    color: var(--text-color);
+}
+
+.component-container{
+    height: 100vh;
 }

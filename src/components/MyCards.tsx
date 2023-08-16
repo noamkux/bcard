@@ -1,8 +1,9 @@
-import { FunctionComponent, useEffect, useState } from "react";
+import { FunctionComponent, useContext, useEffect, useState } from "react";
 import Card from "../interfaces/card";
 import { deleteCard, getCardsByUserId } from "../services/cardService";
 import { Link } from "react-router-dom";
 import EditCardModal from "./EditCardModal";
+import { SiteTheme } from "../App";
 
 interface MyCardsProps {
   userInfo: any;
@@ -12,6 +13,7 @@ const MyCards: FunctionComponent<MyCardsProps> = ({userInfo}) => {
   let [userCards, setUserCards] = useState<Card[]>([]);
   let [dataUpdated, setDataUpdated] = useState<boolean>(false);
   let render = () => setDataUpdated(!dataUpdated);
+  let theme = useContext(SiteTheme);
 
   let handleDelete = (id: number) => {
     deleteCard(id)
@@ -29,18 +31,19 @@ const MyCards: FunctionComponent<MyCardsProps> = ({userInfo}) => {
 
 
   return (
-    <>
-      <div className="mx-5 mb-4 text-center">
+    <div className="component-container">
+      <div className="mx-5 mb-4 text-center header">
         <h1 className="display-1">My Cards</h1>
         <p className="display-6 fs-4">
-          Here you can edit the card you posted and more if nedeed
+          Here you can edit the card you have posted and more if nedeed
         </p>
       </div>
-      <hr className="hr" />
+      <hr className={`hr${theme}`} />
       <div className="container">
       <Link to={"/addnewcard"} className="mb-3 btn btn-success"><i className="fa-solid fa-plus"></i> Add New Card
       </Link>
-        {userCards.length ? (<table className="table">
+        {userCards.length ? (
+          <table className={`${theme=="-dark" ? "table table-dark" : "table"}`}>
           <thead>
             <tr>
               <th scope="col">#</th>
@@ -75,7 +78,7 @@ const MyCards: FunctionComponent<MyCardsProps> = ({userInfo}) => {
         )}
         
       </div>
-    </>
+    </div>
   );
 };
 

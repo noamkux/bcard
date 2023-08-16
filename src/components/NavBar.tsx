@@ -24,7 +24,6 @@ const NavBar: FunctionComponent<NavBarProps> = ({
     navigate("/");
   };
 
-  console.log(theme);
   
   return (
     <>

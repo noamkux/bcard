@@ -7,7 +7,7 @@ export function getAllCards() {
   return axios.get(api);
 }
 
-export function getCardsByUserId(userId: string) {
+export function getCardsByUserId(userId: number) {
   return axios.get(`${api}?ownerId=${userId}`);
 }
 

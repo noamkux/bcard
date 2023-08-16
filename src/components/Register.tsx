@@ -1,10 +1,11 @@
 import { useFormik } from "formik";
-import { FunctionComponent } from "react";
+import { FunctionComponent, useContext } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { successMsg, errorMsg } from "../services/feedbackService";
 import { addUser, checkUser } from "../services/userServices";
 import * as yup from "yup";
 import User from "../interfaces/user";
+import { SiteTheme } from "../App";
 
 interface RegisterProps {
   userInfo: User;
@@ -15,6 +16,7 @@ const Register: FunctionComponent<RegisterProps> = ({
   userInfo,
   setUserInfo,
 }) => {
+  
   let navigate = useNavigate();
   let formik = useFormik({
     initialValues: {
@@ -88,7 +90,7 @@ const Register: FunctionComponent<RegisterProps> = ({
     <>
       <div className="w-50 container">
         <form onSubmit={formik.handleSubmit} className="text-center">
-          <h3 className="display-3 container text-center">Register</h3>
+          <h3 className="display-3 container text-center header">Register</h3>
           <div className="row mb-3">
             <div className="g-2 form-floating col-6">
               <input
@@ -322,7 +324,7 @@ const Register: FunctionComponent<RegisterProps> = ({
               inlineSize: "fit-content",
             }}
           >
-            <label className="form-check-label" htmlFor="flexCheckDefault">
+            <label className="form-check-label header" htmlFor="flexCheckDefault">
               Register As Buissness
             </label>
             <input
@@ -345,7 +347,7 @@ const Register: FunctionComponent<RegisterProps> = ({
           </button>
         </form>
         <Link to="/login">
-          <p className="text-center mt-3">Already user? Login here</p>
+          <p className="text-center mt-3 mb-0 pb-5">Already user? Login here</p>
         </Link>
       </div>
     </>

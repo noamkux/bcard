@@ -47,9 +47,9 @@ const Login: FunctionComponent<LoginProps> = ({userInfo, setUserInfo}) => {
     },
   });
   return (
-    <>
+    <div className="component-container">
       <div className="w-50 container">
-        <form onSubmit={formik.handleSubmit} className="text-center">
+        <form onSubmit={formik.handleSubmit} className="text-center header">
           <h3 className="display-3 container text-center">Login</h3>
           <div className="form-floating mb-3">
             <input
@@ -96,7 +96,7 @@ const Login: FunctionComponent<LoginProps> = ({userInfo, setUserInfo}) => {
           <p className="text-center mt-3">New user? Register here</p>
         </Link>
       </div>
-    </>
+    </div>
   );
 };
 
