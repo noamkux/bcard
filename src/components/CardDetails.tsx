@@ -5,6 +5,7 @@ import { getCardById } from "../services/cardService";
 import User from "../interfaces/user";
 import { getUserByid } from "../services/userServices";
 import GoogleMapComponent from "./GoogleMapComponent";
+import GoogleMapsComp from "./GoogleMapsComp";
 
 interface CardDetailsProps {}
 

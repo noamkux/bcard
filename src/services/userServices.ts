@@ -17,6 +17,10 @@ export function addUser(userToAdd: User) {
   return axios.post(api, userToAdd);
 }
 
+export function updateUserById(userId : number, updatedUser : User){
+  return axios.put(`${api}/${userId}`, updatedUser)
+}
+
 export function deleteUser(idToDelete: number) {
   return axios.delete(`${api}?id=${idToDelete}`);
 }
@@ -24,3 +28,4 @@ export function deleteUser(idToDelete: number) {
 export function getUserByEmail(email: string) {
   return axios.get(`${api}?email=${email}`);
 }
+

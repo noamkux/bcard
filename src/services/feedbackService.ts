@@ -16,3 +16,11 @@ export function errorMsg(message: string) {
     autoClose: 3000,
   });
 }
+
+export function infoMsg(message: string) {
+  toast.info(message, {
+    position: toast.POSITION.TOP_RIGHT,
+
+    autoClose: 3000,
+  });
+}

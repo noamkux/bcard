@@ -1,18 +1,42 @@
 {
   "users": [
     {
-      "name": "tomer kux",
-      "email": "tomer.kux@gmail.com",
-      "password": "noam_tomer",
-      "role": "nonbusiness",
-      "id": 1
-    },
-    {
-      "name": "gilad kux",
       "email": "gilad.kux@gmail.com",
       "password": "noam_tomer",
-      "role": "business",
-      "id": 2
+      "role": "admin",
+      "id": 1,
+      "firstName": "noam",
+      "middleName": "",
+      "lastName": "kux",
+      "phone": "0525433577",
+      "imageURL": "",
+      "gender": "male",
+      "country": "israel",
+      "state": "",
+      "city": "tel-aviv",
+      "street": "dizingof",
+      "houseNumber": "53",
+      "zipCode": "",
+      "imageAlt": ""
+    },
+    {
+      "email": "tomer.kux@gmail.com",
+      "password": "noam_tomer",
+      "role": "admin",
+      "id": 2,
+      "firstName": "noam",
+      "middleName": "",
+      "lastName": "kux",
+      "phone": "0525433577",
+      "imageURL": "",
+      "gender": "male",
+      "country": "israel",
+      "state": "",
+      "city": "tel-aviv",
+      "street": "dizingof",
+      "houseNumber": "53",
+      "zipCode": "",
+      "imageAlt": ""
     },
     {
       "email": "noam.kux@gmail.com",
@@ -31,28 +55,32 @@
       "street": "dizingof",
       "houseNumber": "53",
       "zipCode": "",
-      "imageAlt": ""
+      "imageAlt": "",
+      "favCards": [
+        2,
+        1
+      ]
     }
   ],
   "cards": [
     {
-      "id": 1,
-      "ownerId": 3,
-      "title": "gardener",
+      "email": "gilad.kux@gmail.com",
+      "title": "gardener vas",
       "subtitle": "Young and vigorous gardener",
       "description": "Hi, my name is Gilad, I am a diligent gardener and I would be happy to come and improve the beauty of your garden",
+      "country": "israel",
       "phone": "0525433577",
-      "email": "gilad.kux@gmail.com",
-      "webSite": "www.giladthegardener.com",
       "businessImgURL": "./images/CardsImg/giladTheGardener.jpg",
       "businessImgAlt": "a Gradner Working",
-      "country": "israel",
-      "state": "",
       "city": "tel-aviv",
-      "street": "dizingof",
-      "houseNumber": "53",
       "zipcode": "9777530",
-      "postDate": "17-6-2022"
+      "state": "asa",
+      "street": "dizengoff",
+      "houseNumber": "53",
+      "webSite": "www.giladthegardener.com",
+      "postDate": "3-8-2023",
+      "ownerId": 3,
+      "id": 1
     },
     {
       "id": 2,
@@ -93,23 +121,26 @@
       "postDate": "17-6-2022"
     },
     {
-      "email": "saltmakes@gmail.com",
+      "email": "salw@maker.com",
       "title": "salt maker",
-      "subtitle": "a make qulati salt",
-      "description": "A top-tier salt producer, renowned for its exceptional quality, creates premium salts through meticulous craftsmanship. With an unwavering commitment to purity and taste, they source the finest raw materials and employ advanced techniques to achieve unparalleled flavor and mineral content. Their salts elevate culinary experiences, earning accolades from chefs and consumers alike.",
-      "country": "USA",
-      "phone": "0525433577",
+      "subtitle": "making salt",
+      "description": "making alot of salt for all costumers",
+      "country": "israel",
+      "phone": "05196256596",
       "businessImgURL": "./images/CardsImg/saltMaker.jpg",
       "businessImgAlt": "salt maker",
-      "city": "newYork",
-      "zipcode": "9777513",
-      "state": "arizona",
-      "street": "53 avn",
-      "houseNumber": "2",
-      "webSite": "www.makeSalt.com",
-      "postDate": "30-7-2023",
+      "city": "bear-sheva",
+      "zipcode": "",
+      "state": "",
+      "street": "hashalom",
+      "houseNumber": "10",
+      "webSite": "www.salemake.com",
+      "postDate": "6-8-2023",
       "ownerId": 3,
       "id": 4
     }
+  ],
+  "favorites": [
+    {}
   ]
 }

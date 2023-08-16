@@ -18,6 +18,10 @@ export function getCardById(id : string){
   return axios.get(`${api}/${id}`)
 }
 
+export function updateCardByid(id: string, newCard : Card){
+  return axios.put(`${api}/${id}`, newCard)
+}
+
 export function postNewCard(cardToPost: Card) {
   return axios.post(api, cardToPost);
 }

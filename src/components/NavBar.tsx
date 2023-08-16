@@ -1,24 +1,34 @@
-import { FunctionComponent } from "react";
+import { FunctionComponent, useContext } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
+import { SiteTheme } from "../App";
 
 interface NavBarProps {
   userInfo: any;
   setUserInfo: Function;
+  darkMode: boolean;
+  setDarkMode: Function;
 }
 
-const NavBar: FunctionComponent<NavBarProps> = ({userInfo, setUserInfo}) => {
+const NavBar: FunctionComponent<NavBarProps> = ({
+  userInfo,
+  setUserInfo,
+  darkMode,
+  setDarkMode,
+}) => {
   let navigate = useNavigate();
 
+  let theme = useContext(SiteTheme);
   let handleLogout = () => {
     setUserInfo("");
     sessionStorage.removeItem("userInfo");
     navigate("/");
   };
 
-
+  console.log(theme);
+  
   return (
     <>
-      <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
+      <nav className={`navbar navbar-expand-lg navbar-dark bg-dark`}>
         <NavLink className="navbar-brand ms-1" to={"/"}>
           BCARD
         </NavLink>
@@ -54,8 +64,7 @@ const NavBar: FunctionComponent<NavBarProps> = ({userInfo, setUserInfo}) => {
                   </li>
                 </>
               )}
-              {(userInfo.role === "business" ||
-                userInfo.role === "admin") && (
+              {(userInfo.role === "business" || userInfo.role === "admin") && (
                 <>
                   <li className="nav-item">
                     <NavLink className="nav-link" to={"/mycards"}>
@@ -97,7 +106,7 @@ const NavBar: FunctionComponent<NavBarProps> = ({userInfo, setUserInfo}) => {
               >
                 Sign-Up
               </NavLink>
-              
+
               <NavLink
                 to={"/login"}
                 className="btn btn-outline-primary me-3"
@@ -116,6 +125,13 @@ const NavBar: FunctionComponent<NavBarProps> = ({userInfo, setUserInfo}) => {
               </NavLink>
             </div>
           )}
+          <input
+            className="form-check-input me-3 mt-2"
+            type="checkbox"
+            role="switch"
+            onChange={ () => {setDarkMode(!darkMode)}
+            }
+          />
         </form>
       </nav>
     </>

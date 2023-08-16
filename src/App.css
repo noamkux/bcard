@@ -1,0 +1,38 @@
+.dark{
+    --color-primary: #27374D;
+    --color-secondery: #526D82;
+    --text-color : #e2ebf3;
+    --text-color-secondery : #c0c6cb; 
+}
+.light{
+    --color-primary: white
+}
+
+.App{
+    background-color: var(--color-primary);
+}
+
+.dark .card{
+    background-color: var(--color-secondery); 
+}
+
+.dark .header{
+    color: var(--text-color);
+}
+
+.card .theme-text-dark{
+    color: var(--text-color);
+}
+
+.dark .card-text{
+    color: var(--text-color-secondery)
+}
+
+.dark .btn {
+color: white;
+background-color: var(--color-primary);
+}
+
+.dark .card-footer{
+    color: var(--text-color-secondery);
+}

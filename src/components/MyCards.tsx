@@ -2,6 +2,7 @@ import { FunctionComponent, useEffect, useState } from "react";
 import Card from "../interfaces/card";
 import { deleteCard, getCardsByUserId } from "../services/cardService";
 import { Link } from "react-router-dom";
+import EditCardModal from "./EditCardModal";
 
 interface MyCardsProps {
   userInfo: any;
@@ -18,6 +19,7 @@ const MyCards: FunctionComponent<MyCardsProps> = ({userInfo}) => {
       .catch((err) => console.log(err));
       render()
   }
+
 
   useEffect(() => {
     getCardsByUserId(userInfo.userId)
@@ -56,10 +58,8 @@ const MyCards: FunctionComponent<MyCardsProps> = ({userInfo}) => {
                   <td>{card.title}</td>
                   <td>{card.postDate}</td>
                   <td>
-                    <i
-                      className="ms-2 fa-solid fa-file-pen"
-                    style={{cursor : "pointer"}}
-                    ></i>
+                    <EditCardModal cardId={card.id as any} userInfo={userInfo}/>
+                    
                   </td>
                   <td>
                     <i className="ms-2 fa-solid fa-trash col-4"

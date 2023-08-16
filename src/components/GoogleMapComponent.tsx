@@ -18,41 +18,45 @@ const GoogleMapComponent: FunctionComponent<GoogleMapComponentProps> = ({
   const containerStyle = {
     width: "100%",
     height: "100%",
-    
-    
   };
-  const [coordinates, setCoordinates] = useState({ lat: 0, lng: 0 });
+  const [coordinates, setCoordinates] = useState({ lat: 10, lng: 8 });
+  const [isLoaded, setIsLoaded] = useState(false);
+
+  const address = `${houseNumber} ${street} ${city}`;
+  const geocodeUrl = `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(
+    address
+  )}&key=${apiKey}`;
 
   useEffect(() => {
-    const address = `${houseNumber} ${street}, ${city}`;
-
-    const geocodeUrl = `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(
-      address
-    )}&key=${apiKey}`;
     axios
       .get(geocodeUrl)
       .then((response) => {
-        const location = response.data.results[0]?.geometry?.location;if (location) {
+        const location = response.data.results[0]?.geometry?.location;
+
+        if (location) {
+          console.log("Geocoding response:", location);
           setCoordinates({ lat: location.lat, lng: location.lng });
-        } else {
-          console.error("Error: Invalid geocoding response:", response.data);
-      }})
+        } 
+      })
       .catch((error) => {
         console.error("Error fetching geocoding data:", error);
+      })
+      .finally(() => {
+        setIsLoaded(true); // Set isLoaded to true when the request is done
       });
   }, [city, street, houseNumber, apiKey]);
 
   return (
     <>
-      <LoadScript googleMapsApiKey={apiKey}>
-        <GoogleMap
-          mapContainerStyle={containerStyle}
-          center={coordinates}
-          zoom={15}
-        >
-          <Marker position={coordinates} />
-        </GoogleMap>
-      </LoadScript>
+        {isLoaded && ( // Only render the map when isLoaded is true
+          <GoogleMap
+            mapContainerStyle={containerStyle}
+            center={coordinates}
+            zoom={15}
+          >
+            <Marker position={coordinates} />
+          </GoogleMap>
+        )}
     </>
   );
 };

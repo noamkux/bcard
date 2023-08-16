@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from "react";
-import logo from "./logo.svg";
+import React, { useEffect, useState, createContext } from "react";
 import "./App.css";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
@@ -15,6 +14,15 @@ import NavBar from "./components/NavBar";
 import Profile from "./components/Profile";
 import NewCard from "./components/NewCard";
 import CardDetails from "./components/CardDetails";
+import { LoadScript } from "@react-google-maps/api";
+
+const themes = {
+  light: "",
+  dark: "-dark",
+  
+};
+
+export const SiteTheme = createContext(themes.light);
 
 function App() {
   let [userInfo, setUserInfo] = useState(
@@ -22,33 +30,52 @@ function App() {
       ? { email: false, isAdmin: false }
       : JSON.parse(sessionStorage.getItem("userInfo") as string)
   );
-
+  const [darkMode, setDarkMode] = useState<boolean>(false);
   return (
-    <>
-      <ToastContainer></ToastContainer>
-      <Router>
-        <NavBar userInfo={userInfo} setUserInfo={setUserInfo} />
-        <Routes>
-          <Route path="/" element={<Home userInfo={userInfo} />} />
-          <Route
-            path="/login"
-            element={<Login userInfo={userInfo} setUserInfo={setUserInfo} />}
+    <div 
+    className={`App  ${darkMode ? "dark" : "light"}`}>
+      <SiteTheme.Provider value={darkMode ? themes.dark : themes.light}>
+        <ToastContainer theme={`${darkMode ? "dark" : "light"}`} />
+        
+      <LoadScript googleMapsApiKey="AIzaSyBCC0p8BEYu5p51WHCJXpBRaKF93XeLm8I">
+        <Router>
+          <NavBar
+            userInfo={userInfo}
+            setUserInfo={setUserInfo}
+            darkMode={darkMode}
+            setDarkMode={setDarkMode}
           />
-          <Route
-            path="/register"
-            element={<Register userInfo={userInfo} setUserInfo={setUserInfo} />}
-          />
-          <Route path="/addnewCard" element={<NewCard userInfo={userInfo} />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/:cardId" element={<CardDetails/>} />
-          <Route path="/favcards" element={<FavCards />} />
-          <Route path="/mycards" element={<MyCards userInfo={userInfo} />} />
-          <Route path="sandbox" element={<Sandbox />} />
-          <Route path="/profile" element={<Profile userInfo={userInfo} />} />
-          <Route path="*" element={<PageNotFound />} />
-        </Routes>
-      </Router>
-    </>
+          <Routes>
+            <Route path="/" element={<Home userInfo={userInfo} />} />
+            <Route
+              path="/login"
+              element={<Login userInfo={userInfo} setUserInfo={setUserInfo} />}
+            />
+            <Route
+              path="/register"
+              element={
+                <Register userInfo={userInfo} setUserInfo={setUserInfo} />
+              }
+            />
+            <Route
+              path="/addnewCard"
+              element={<NewCard userInfo={userInfo} />}
+            />
+            <Route path="/about" element={<About />} />
+            <Route path="/:cardId" element={<CardDetails />} />
+            <Route
+              path="/favcards"
+              element={<FavCards userInfo={userInfo} />}
+            />
+            <Route path="/mycards" element={<MyCards userInfo={userInfo} />} />
+            <Route path="sandbox" element={<Sandbox />} />
+            <Route path="/profile" element={<Profile userInfo={userInfo} />} />
+            <Route path="*" element={<PageNotFound />} />
+          </Routes>
+        </Router>
+        </LoadScript>
+      </SiteTheme.Provider>
+    </div>
   );
 }
 
