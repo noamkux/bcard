@@ -4,30 +4,31 @@ import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import {
   getCardById,
-  postNewCard,
   updateCardByid,
 } from "../services/cardService";
 import Card from "../interfaces/card";
 import * as yup from "yup";
 import { useFormik } from "formik";
 import { successMsg, errorMsg } from "../services/feedbackService";
-import { useNavigate } from "react-router-dom";
 
 interface EditCardModalProps {
   cardId: string;
   userInfo: any;
+  dataUpdated: boolean;
+  setDataUpdated: Function;
 }
 
 const EditCardModal: FunctionComponent<EditCardModalProps> = ({
   cardId,
   userInfo,
+  dataUpdated,
+  setDataUpdated,
 }) => {
   const date = new Date();
   let day = date.getDate();
   let month = date.getMonth() + 1;
   let year = date.getFullYear();
   let currentDate = `${day}-${month}-${year}`;
-  let navigate = useNavigate();
   const [show, setShow] = useState(false);
   const [currentCard, setCurrentCard] = useState<Card>({
     title: "",
@@ -92,10 +93,13 @@ const EditCardModal: FunctionComponent<EditCardModalProps> = ({
         ...values,
         postDate: currentDate,
         ownerId: userInfo.userId,
-      })
+      }
+      )
         .then((res) => console.log(res.data))
         .catch((err) => console.log(err));
-      navigate("/mycards");
+        
+        successMsg(values.title + " Card updated successfully")
+        setDataUpdated(!dataUpdated)
     },
   });
 
@@ -111,10 +115,6 @@ const EditCardModal: FunctionComponent<EditCardModalProps> = ({
 
     fetchData();
   }, [cardId]);
-
-  console.log(currentCard);
-
-  console.log(cardId);
 
   return (
     <>

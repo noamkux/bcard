@@ -50,8 +50,10 @@ const GoogleMapComponent: FunctionComponent<GoogleMapComponentProps> = ({
     <>
         {isLoaded && ( // Only render the map when isLoaded is true
           <GoogleMap
+        
             mapContainerStyle={containerStyle}
             center={coordinates}
+            mapTypeId=""
             zoom={15}
           >
             <Marker position={coordinates} />

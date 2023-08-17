@@ -1,13 +1,16 @@
 import { FunctionComponent, useContext, useEffect, useState } from "react";
 import User from "../interfaces/user";
 import { deleteUser, getAllUsers } from "../services/userServices";
-import EditRole from "./EditRole";
+import EditRole from "./EditRoleModal";
 import { getCardsByUserId } from "../services/cardService";
 import { SiteTheme } from "../App";
+import EditRoleModal from "./EditRoleModal";
 
-interface SandboxProps {}
+interface SandboxProps {
+  userInfo: any;
+}
 
-const Sandbox: FunctionComponent<SandboxProps> = () => {
+const Sandbox: FunctionComponent<SandboxProps> = ({ userInfo }) => {
   let [users, setUsers] = useState<User[]>([]);
   const [postedCards, setPostedCards] = useState<{ [key: number]: number }>({});
   let theme = useContext(SiteTheme);
@@ -16,14 +19,13 @@ const Sandbox: FunctionComponent<SandboxProps> = () => {
 
   let handleDelete = (id: number) => {
     deleteUser(id)
-    .then((res) => {
-      console.log(res.data);
-      render();
-    })
-    .catch((err) => console.log(err));
+      .then((res) => {
+        render();
+      })
+      .catch((err) => console.log(err));
   };
 
-  let handleEdit = (id: number) => {};
+  console.log(userInfo);
 
   useEffect(() => {
     getAllUsers()
@@ -31,12 +33,9 @@ const Sandbox: FunctionComponent<SandboxProps> = () => {
         setUsers(res.data);
       })
       .catch((err) => console.log(err));
-
-    
   }, [dataUpdated]);
 
   useEffect(() => {
-    
     users.map((user: User) =>
       getCardsByUserId(user.id as number)
         .then((res) => {
@@ -47,7 +46,6 @@ const Sandbox: FunctionComponent<SandboxProps> = () => {
         })
         .catch((err) => console.log("error"))
     );
-
   }, [users]);
 
   return (
@@ -62,7 +60,9 @@ const Sandbox: FunctionComponent<SandboxProps> = () => {
       <hr className="hr" />
       <div className="container">
         {users.length ? (
-          <table className={`${theme=="-dark" ? "table table-dark" : "table"}`}>
+          <table
+            className={`${theme == "-dark" ? "table table-dark" : "table"}`}
+          >
             <thead>
               <tr>
                 <th scope="col">#</th>
@@ -87,14 +87,26 @@ const Sandbox: FunctionComponent<SandboxProps> = () => {
                   <td>{user.phone}</td>
                   <td>{postedCards[user.id as number]}</td>
                   <td>
-                    <EditRole userId={user.id as number} />
+                    <EditRoleModal
+                      userId={user.id as number}
+                      dataUpdated={dataUpdated}
+                      setDataUpdated={setDataUpdated}
+                    />
                   </td>
                   <td>
-                    <i
+                    {userInfo.userId == user.id ? (
+                      <>
+                      <i
+                      className="ms-2 fa-solid fa-trash col-4"
+                      title="you can't delete yourself"
+                      style={{ cursor: "not-allowed" }}
+                      ></i>
+                      </>
+                    ) : (<i
                       className="ms-2 fa-solid fa-trash col-4"
                       style={{ cursor: "pointer" }}
                       onClick={() => handleDelete(user.id as number)}
-                    ></i>
+                    ></i>)}
                   </td>
                 </tr>
               ))}

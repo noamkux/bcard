@@ -13,6 +13,8 @@
     
 }
 
+.card{ height: 100% !important;}
+
 .dark .card{
     background-color: var(--color-secondery); 
 }
@@ -21,12 +23,26 @@
     color: var(--text-color);
 }
 
+/* .fa-solid{
+    
+    text-shadow: "2px 2px 4px rgba(0, 0, 0, 0.5)",
+} */
+
+.dark .text{
+    color: var(--text-color-secondery);
+}
+
+.phone-dark{
+    color: var(--text-color);
+}
+
 .card .theme-text-dark{
     color: var(--text-color);
 }
 
 .dark .card-text{
-    color: var(--text-color-secondery)
+    color: var(--text-color-secondery);
+    
 }
 
 .dark .btn {
@@ -34,8 +50,13 @@ color: white;
 background-color: var(--color-primary);
 }
 
-.dark .card-footer{
+.card-body .card-footer{
+    background-color: white;
+}
+
+.dark .card-body  .card-footer{
     color: var(--text-color-secondery);
+    background-color: var(--color-secondery);
 }
 
 .hr-dark{
@@ -44,4 +65,12 @@ background-color: var(--color-primary);
 
 .component-container{
     height: 100vh;
+}
+
+.card-footer{
+    border-top: 0px !important;
+}
+
+.phone{
+    color: black;
 }

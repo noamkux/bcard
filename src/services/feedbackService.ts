@@ -5,7 +5,7 @@ export function successMsg(message: string) {
   toast.success(message, {
     position: toast.POSITION.TOP_RIGHT,
 
-    autoClose: 3000,
+    autoClose: 2000,
   });
 }
 
@@ -21,6 +21,6 @@ export function infoMsg(message: string) {
   toast.info(message, {
     position: toast.POSITION.TOP_RIGHT,
 
-    autoClose: 3000,
+    autoClose: 2000,
   });
 }

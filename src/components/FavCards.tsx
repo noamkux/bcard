@@ -5,6 +5,7 @@ import { getAllCards } from "../services/cardService";
 import Card from "../interfaces/card";
 import { Link } from "react-router-dom";
 import { handleUserFav } from "../services/favoritesService";
+import { successMsg, infoMsg } from "../services/feedbackService";
 
 interface FavCardsProps {
   userInfo: any;
@@ -16,7 +17,13 @@ const FavCards: FunctionComponent<FavCardsProps> = ({ userInfo }) => {
   let [dataUpdated, setDataUpdated] = useState<boolean>(false);
   const render = () => setDataUpdated(!dataUpdated);
   let deleteFav = (idToDelete: number, userId: number) => {
-    handleUserFav(idToDelete, userId);
+    handleUserFav(idToDelete, userId)
+    .then((res) => {
+      if (res) {
+        successMsg("Added to favorites");
+      } else infoMsg("Removed from favorites");
+    })
+    .catch((err) => console.log(err));
     render();
   };
   useEffect(() => {
@@ -85,7 +92,7 @@ const FavCards: FunctionComponent<FavCardsProps> = ({ userInfo }) => {
                       {card.country}
                     </div>
                     <i
-                      className="fa-solid fa-heart col-4"
+                      className="fa-solid fa-heart col-12 text-center"
                       onClick={() =>
                         deleteFav(card.id as number, userInfo.userId)
                       }
@@ -94,7 +101,7 @@ const FavCards: FunctionComponent<FavCardsProps> = ({ userInfo }) => {
                   </div>
                 </div>
               </div>
-            ) : (<></>
+            ) : (""
             )
           )}
         </div>

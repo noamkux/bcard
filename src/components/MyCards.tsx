@@ -61,7 +61,7 @@ const MyCards: FunctionComponent<MyCardsProps> = ({userInfo}) => {
                   <td>{card.title}</td>
                   <td>{card.postDate}</td>
                   <td>
-                    <EditCardModal cardId={card.id as any} userInfo={userInfo}/>
+                    <EditCardModal cardId={card.id as any} userInfo={userInfo} dataUpdated={dataUpdated} setDataUpdated={setDataUpdated}/>
                     
                   </td>
                   <td>

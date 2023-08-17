@@ -5,6 +5,8 @@ import { Link } from "react-router-dom";
 import { handleUserFav } from "../services/favoritesService";
 import { getUserByid } from "../services/userServices";
 import { SiteTheme } from "../App";
+import { infoMsg, successMsg } from "../services/feedbackService";
+import { motion } from "framer-motion";
 
 interface HomeProps {
   userInfo: any;
@@ -26,7 +28,9 @@ const Home: FunctionComponent<HomeProps> = ({ userInfo }) => {
   let handleFav = async (cardId: number) => {
     try {
       const response = await handleUserFav(cardId, userInfo.userId);
-      console.log(response);
+      if (response) {
+        successMsg("Added to favorites");
+      } else infoMsg("Removed from favorites");
       render();
     } catch (error) {
       console.log(error);
@@ -38,8 +42,7 @@ const Home: FunctionComponent<HomeProps> = ({ userInfo }) => {
       .catch((err) => console.log(err));
     getUserByid(userInfo.userId)
       .then((res) => setFavoriteCards(res.data.favCards))
-      .catch((err) => console.log(err)); 
-      
+      .catch((err) => console.log(err));
   }, [dataUpdated]);
 
   return (
@@ -57,10 +60,11 @@ const Home: FunctionComponent<HomeProps> = ({ userInfo }) => {
         <div className="container">
           <div className="row">
             {cards.map((card: Card) => (
-              <div className="col-md-4 mb-5 " key={card.id}>
+              <div className="col-lg-4 mb-3" key={card.id}>
                 <div className={`card theme${theme}`} style={{ width: "100%" }}>
                   <Link to={`/${card.id}`}>
-                    <img
+                    <motion.img
+                      whileHover={{ height : 200 }}
                       src={card.businessImgURL}
                       className="card-img-top"
                       alt={card.businessImgAlt}
@@ -72,56 +76,83 @@ const Home: FunctionComponent<HomeProps> = ({ userInfo }) => {
                       style={{ textDecoration: "none", color: "black" }}
                       to={`/${card.id}`}
                     >
-                      <h5 className={`card-title text-center theme-text${theme}`}>
+                      <h5
+                        className={`card-title text-center theme-text${theme}`}
+                      >
                         {card.title.charAt(0).toUpperCase() +
                           card.title.slice(1)}
                       </h5>
-                      <p className={`card-text display-6 fs-6 text-center mb-3 theme-text${theme}`}>
+                      <p
+                        className={`card-text display-6 fs-6 text-center mb-3 theme-text${theme}`}
+                      >
                         {card.subtitle}
                       </p>
                     </Link>
-                    <p className="card-text">{card.description}</p>
+                    <p className="card-text" style={{ height: "5rem" }}>
+                      {card.description}
+                    </p>
                     <a
                       href={"https://" + card.webSite}
                       target="_blank"
-                      className="btn btn-primary w-100"
+                      className="d-flex justify-content-center text-decoration-none"
                     >
-                      Go To{" "}
-                      {card.title.charAt(0).toUpperCase() + card.title.slice(1)}{" "}
-                      Website
+                      <motion.button
+                        whileHover={{ scale: 1.1 }}
+                        style={{ width: "80%" }}
+                        className="btn btn-outline-primary"
+                      >
+                        Go To{" "}
+                        {card.title.charAt(0).toUpperCase() +
+                          card.title.slice(1)}{" "}
+                        Website
+                      </motion.button>
                     </a>
                     <div className="card-footer text-center">
-                      Address :{card.city}, {card.street} {card.houseNumber},{" "}
-                      {card.country}
+                      <p className="mb-3">
+                        Address :{card.city}, {card.street} {card.houseNumber},{" "}
+                        {card.country}
+                      </p>
                       <div className="text-center mt-1">
                         {(userInfo.role === "admin" ||
                           userInfo.userId === card.ownerId) && (
-                          <i
-                            className="fa-solid fa-trash col-4"
+                          <motion.i
+                            className="fa-solid fa-lg fa-trash col-4"
                             style={{ cursor: "pointer" }}
                             onClick={() => handleDelete(card.id as number)}
-                          ></i>
+                            whileHover={{ scale: 1.5 }}
+                          ></motion.i>
                         )}
-                        {userInfo.email &&(
-                        favoritesCards?.includes(card.id as number) ? (
-                          <i
-                            className="fa-solid fa-heart col-4"
-                            onClick={() => handleFav(card.id as number)}
-                            style={{ cursor: "pointer", color: "red" }}
-                            
-                          ></i>
-                        ) : (
-                          <i
-                            className="fa-solid fa-heart col-4"
-                            onClick={() => handleFav(card.id as number)}
-                            style={{ cursor: "pointer", color: "black" }}
-                          ></i>
-                        ))}
-                        <Link
-                          to={`tel:${card.phone}`}
-                          style={{ color: "black" }}
-                        >
-                          <i className="fa-solid fa-phone col-4"></i>
+                        {userInfo.email &&
+                          (favoritesCards?.includes(card.id as number) ? (
+                            <motion.i
+                              className="fa-solid fa-heart fa-lg col-4"
+                              onClick={() => handleFav(card.id as number)}
+                              style={{ cursor: "pointer", color: "red" }}
+                              whileHover={{ scale: 1.5 }}
+                            ></motion.i>
+                          ) : theme == "" ? (
+                            <motion.i
+                              className="fa-solid fa-heart fa-lg col-4"
+                              onClick={() => handleFav(card.id as number)}
+                              style={{ cursor: "pointer", color: "black" }}
+                              whileHover={{ scale: 1.5 }}
+                            ></motion.i>
+                          ) : (
+                            <motion.i
+                              className="fa-solid fa-heart fa-lg col-4"
+                              onClick={() => handleFav(card.id as number)}
+                              style={{
+                                cursor: "pointer",
+                                color: "white",
+                              }}
+                              whileHover={{ scale: 1.5 }}
+                            ></motion.i>
+                          ))}
+                        <Link to={`tel:${card.phone}`}>
+                          <motion.i
+                            whileHover={{ scale: 1.5 }}
+                            className={`fa-solid fa-lg fa-phone phone${theme} col-4`}
+                          ></motion.i>
                         </Link>
                       </div>
                     </div>

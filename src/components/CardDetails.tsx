@@ -5,7 +5,6 @@ import { getCardById } from "../services/cardService";
 import User from "../interfaces/user";
 import { getUserByid } from "../services/userServices";
 import GoogleMapComponent from "./GoogleMapComponent";
-import GoogleMapsComp from "./GoogleMapsComp";
 
 interface CardDetailsProps {}
 
@@ -33,24 +32,25 @@ const CardDetails: FunctionComponent<CardDetailsProps> = () => {
     fetchData();
   }, [cardId]);
   return (
-    <>
+    <div className="component-container">
       <div className="mx-5 mb-4">
-        <h1 className="display-1">{currentCard?.title} Details</h1>
+        <h1 className="display-1 header">{currentCard?.title} Details</h1>
       </div>
       <hr className="hr" />
       <div className="row m-0">
         <div className="col-md-6 p-0 ms-3">
-          <h5 className="display-5">
-            {cardOwner?.firstName} {cardOwner?.lastName} - {cardOwner?.city}
+          <h5 className="display-5 header">
+            {currentCard?.email} - {currentCard?.phone}
           </h5>
-          <p className="display-6 fs-4">{currentCard?.subtitle}</p>
-          <p className="display-6 fs-4">{currentCard?.description}</p>
-          <p>
+          <p className="display-6 fs-4 text">{currentCard?.subtitle}</p>
+          <p className="display-6 fs-4 text">{currentCard?.description}</p>
+          <p className="text">
             Located at Address :{currentCard?.city}, {currentCard?.street}{" "}
             {currentCard?.houseNumber}, {currentCard?.country}
           </p>
           <div className="map-container">
         <GoogleMapComponent
+        
             city={currentCard?.city as string}
             street={currentCard?.street as string}
             houseNumber={currentCard?.houseNumber as string}
@@ -63,10 +63,11 @@ const CardDetails: FunctionComponent<CardDetailsProps> = () => {
           className="cardDetailsImg"
             src={currentCard?.businessImgURL}
             alt={currentCard?.businessImgAlt}
+            style={{ width: "100%", height: "50vh", objectFit: "cover" }}
           />
         </div>
       </div>
-    </>
+    </div>
   );
 };
 
