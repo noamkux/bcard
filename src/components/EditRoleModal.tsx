@@ -1,9 +1,10 @@
-import { FunctionComponent, useEffect, useState } from "react";
+import { FunctionComponent, useContext, useEffect, useState } from "react";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import User from "../interfaces/user";
 import { getUserByid, updateUserById } from "../services/userServices";
 import { successMsg, errorMsg } from "../services/feedbackService";
+import { SiteTheme } from "../App";
 
 interface EditRoleModalProps {
   userId: number;
@@ -17,6 +18,7 @@ const EditRoleModal: FunctionComponent<EditRoleModalProps> = ({
   setDataUpdated,
 }) => {
   const [show, setShow] = useState(false);
+  let theme = useContext(SiteTheme);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   const [userDetails, setUserDetails] = useState<User>();
@@ -69,7 +71,9 @@ const EditRoleModal: FunctionComponent<EditRoleModalProps> = ({
         backdrop="static"
         keyboard={false}
       >
-        <Modal.Header closeButton>
+        <Modal.Header closeButton
+        >
+          
           <Modal.Title>Edit {userDetails?.firstName} role</Modal.Title>
         </Modal.Header>
         <Modal.Body>

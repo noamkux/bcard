@@ -96,17 +96,19 @@ const Sandbox: FunctionComponent<SandboxProps> = ({ userInfo }) => {
                   <td>
                     {userInfo.userId == user.id ? (
                       <>
-                      <i
-                      className="ms-2 fa-solid fa-trash col-4"
-                      title="you can't delete yourself"
-                      style={{ cursor: "not-allowed" }}
-                      ></i>
+                        <i
+                          className="ms-2 fa-solid fa-trash col-4"
+                          title="you can't delete yourself"
+                          style={{ cursor: "not-allowed" }}
+                        ></i>
                       </>
-                    ) : (<i
-                      className="ms-2 fa-solid fa-trash col-4"
-                      style={{ cursor: "pointer" }}
-                      onClick={() => handleDelete(user.id as number)}
-                    ></i>)}
+                    ) : (
+                      <i
+                        className="ms-2 fa-solid fa-trash col-4"
+                        style={{ cursor: "pointer" }}
+                        onClick={() => handleDelete(user.id as number)}
+                      ></i>
+                    )}
                   </td>
                 </tr>
               ))}

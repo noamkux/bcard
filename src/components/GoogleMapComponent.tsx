@@ -36,14 +36,14 @@ const GoogleMapComponent: FunctionComponent<GoogleMapComponentProps> = ({
         if (location) {
           console.log("Geocoding response:", location);
           setCoordinates({ lat: location.lat, lng: location.lng });
+          setIsLoaded(true); // Set isLoaded to true when the request is done
+      
         } 
       })
       .catch((error) => {
         console.error("Error fetching geocoding data:", error);
       })
-      .finally(() => {
-        setIsLoaded(true); // Set isLoaded to true when the request is done
-      });
+      
   }, [city, street, houseNumber, apiKey]);
 
   return (
@@ -53,7 +53,6 @@ const GoogleMapComponent: FunctionComponent<GoogleMapComponentProps> = ({
         
             mapContainerStyle={containerStyle}
             center={coordinates}
-            mapTypeId=""
             zoom={15}
           >
             <Marker position={coordinates} />

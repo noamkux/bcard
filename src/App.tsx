@@ -15,6 +15,7 @@ import Profile from "./components/Profile";
 import NewCard from "./components/NewCard";
 import CardDetails from "./components/CardDetails";
 import { LoadScript } from "@react-google-maps/api";
+import Footer from "./components/Footer";
 
 const themes = {
   light: "",
@@ -78,6 +79,8 @@ function App() {
               />
               <Route path="*" element={<PageNotFound />} />
             </Routes>
+            <Footer 
+              userInfo={userInfo} />
           </Router>
         </LoadScript>
       </SiteTheme.Provider>

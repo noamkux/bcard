@@ -6,6 +6,7 @@ import { addUser, checkUser } from "../services/userServices";
 import * as yup from "yup";
 import User from "../interfaces/user";
 import { SiteTheme } from "../App";
+import { motion } from "framer-motion";
 
 interface RegisterProps {
   userInfo: User;
@@ -338,13 +339,14 @@ const Register: FunctionComponent<RegisterProps> = ({
             />
           </div>
 
-          <button
+          <motion.button
             type="submit"
             className="btn btn-success mt-4 w-100"
             disabled={!formik.isValid || !formik.dirty}
+            whileHover={{scale : 1.1,}}
           >
             Register
-          </button>
+          </motion.button>
         </form>
         <Link to="/login">
           <p className="text-center mt-3 mb-0 pb-5">Already user? Login here</p>

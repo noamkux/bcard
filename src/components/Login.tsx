@@ -1,17 +1,20 @@
 import { useFormik } from "formik";
-import { FunctionComponent } from "react";
+import { FunctionComponent, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import * as yup from "yup";
 import { checkUser } from "../services/userServices";
 import { successMsg, errorMsg } from "../services/feedbackService";
 import User from "../interfaces/user";
+import { SiteTheme } from "../App";
+import { motion } from "framer-motion";
 
 interface LoginProps {
   userInfo: User;
   setUserInfo: Function;
 }
 
-const Login: FunctionComponent<LoginProps> = ({userInfo, setUserInfo}) => {
+const Login: FunctionComponent<LoginProps> = ({ userInfo, setUserInfo }) => {
+  let theme = useContext(SiteTheme);
   let navigate = useNavigate();
   let formik = useFormik({
     initialValues: { email: "", password: "" },
@@ -26,7 +29,9 @@ const Login: FunctionComponent<LoginProps> = ({userInfo, setUserInfo}) => {
       checkUser(values)
         .then((res) => {
           if (res.data.length) {
-            successMsg(`Welcom back ${res.data[0].firstName} ${res.data[0].lastName}`);            
+            successMsg(
+              `Welcom back ${res.data[0].firstName} ${res.data[0].lastName}`
+            );
             sessionStorage.setItem(
               "userInfo",
               JSON.stringify({
@@ -40,7 +45,6 @@ const Login: FunctionComponent<LoginProps> = ({userInfo, setUserInfo}) => {
             setUserInfo(
               JSON.parse(sessionStorage.getItem("userInfo") as string)
             );
-
           } else errorMsg("Acount Not Found");
         })
         .catch((err) => console.log(err));
@@ -49,20 +53,21 @@ const Login: FunctionComponent<LoginProps> = ({userInfo, setUserInfo}) => {
   return (
     <div className="component-container">
       <div className="w-50 container">
-        <form onSubmit={formik.handleSubmit} className="text-center header">
-          <h3 className="display-3 container text-center">Login</h3>
+        <form onSubmit={formik.handleSubmit} className="text-center"
+        autoComplete="off">
+          <h3 className="display-3 container text-center header">Login</h3>
           <div className="form-floating mb-3">
             <input
               type="email"
               name="email"
               className="form-control"
-              id="floatingInput"
+              id="floatingEmailInput"
               placeholder="name@example.com"
               onChange={formik.handleChange}
               value={formik.values.email}
               onBlur={formik.handleBlur}
-            />
-            <label htmlFor="floatingInput">Email address</label>
+            ></input>
+            <label htmlFor="floatingEmailInput">Email address</label>
             {formik.touched.email && formik.errors.email && (
               <p className="text-danger">{formik.errors.email}</p>
             )}
@@ -82,13 +87,14 @@ const Login: FunctionComponent<LoginProps> = ({userInfo, setUserInfo}) => {
             {formik.touched.password && formik.errors.password && (
               <p className="text-danger">{formik.errors.password}</p>
             )}
-            <button
+            <motion.button
               type="submit"
               className="btn btn-success mt-4 w-100"
               disabled={!formik.isValid || !formik.dirty}
+              whileHover={{ scale: 1.1 }}
             >
               Login
-            </button>
+            </motion.button>
           </div>
         </form>
 

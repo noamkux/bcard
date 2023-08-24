@@ -61,6 +61,7 @@
       "zipCode": "",
       "imageAlt": "",
       "favCards": [
+        5,
         2
       ]
     },
@@ -81,6 +82,24 @@
       "role": "business",
       "country": "gegeg",
       "id": 4
+    },
+    {
+      "email": "test@test.com",
+      "password": "test1234",
+      "firstName": "test",
+      "middleName": "test",
+      "lastName": "test",
+      "phone": "0501234567",
+      "imageURL": "",
+      "imageAlt": "",
+      "city": "bersheva",
+      "zipCode": "",
+      "state": "",
+      "street": "yerushalyim",
+      "houseNumber": "55",
+      "role": "business",
+      "country": "israek",
+      "id": 5
     }
   ],
   "cards": [
@@ -217,25 +236,6 @@
       "postDate": "8-16-2023"
     },
     {
-      "id": 8,
-      "ownerId": 1,
-      "title": "Personal Chef",
-      "subtitle": "Delicious meals in the comfort of your home",
-      "description": "Greetings! I'm a skilled chef dedicated to providing exquisite dining experiences tailored to your tastes.",
-      "phone": "5559876543",
-      "email": "chef@culinarydelights.com",
-      "webSite": "www.personalchefservices.com",
-      "businessImgURL": "https://images.unsplash.com/photo-1653233796627-3416bd71a365?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=870&q=80",
-      "businessImgAlt": "Chef preparing a meal",
-      "country": "France",
-      "state": "Île-de-France",
-      "city": "Paris",
-      "street": "Gourmet Lane",
-      "houseNumber": "27",
-      "zipcode": "75001",
-      "postDate": "8-16-2023"
-    },
-    {
       "id": 9,
       "ownerId": 2,
       "title": "Yoga Instructor",
@@ -293,25 +293,6 @@
       "postDate": "8-16-2023"
     },
     {
-      "id": 12,
-      "ownerId": 1,
-      "title": "Interior Designer",
-      "subtitle": "Transforming spaces into works of art",
-      "description": "Hello, I'm a creative interior designer passionate about crafting functional and aesthetic living environments that resonate with your style.",
-      "phone": "1235557890",
-      "email": "design@interiorvisions.com",
-      "webSite": "www.interiorvisionsdesign.com",
-      "businessImgURL": "https://plus.unsplash.com/premium_photo-1663047346199-9516fe33fce1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=387&q=80",
-      "businessImgAlt": "Interior Designer working on a room",
-      "country": "United States",
-      "state": "New York",
-      "city": "Manhattan",
-      "street": "Design Avenue",
-      "houseNumber": "34",
-      "zipcode": "10001",
-      "postDate": "8-16-2023"
-    },
-    {
       "id": 13,
       "ownerId": 3,
       "title": "Language Tutor",
@@ -329,6 +310,25 @@
       "houseNumber": "21",
       "zipcode": "28001",
       "postDate": "8-16-2023"
+    },
+    {
+      "email": "noam.kj@fninf.com",
+      "title": "as",
+      "subtitle": "sdsddd",
+      "description": "dwwdwdwdwdwdwdwdwdwdwdwd",
+      "country": "fnkenf",
+      "phone": "64484646464",
+      "businessImgURL": "./images/CardsImg/saltMaker.jpg",
+      "businessImgAlt": "a Gradner Working",
+      "city": "fnkeknfen",
+      "zipcode": "56464",
+      "state": "fninf",
+      "street": "kwndfk",
+      "houseNumber": "55",
+      "webSite": "nwifwfn.com",
+      "postDate": "24-8-2023",
+      "ownerId": 3,
+      "id": 14
     }
   ],
   "favorites": [

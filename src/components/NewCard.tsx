@@ -5,6 +5,7 @@ import { successMsg, errorMsg } from "../services/feedbackService";
 import * as yup from "yup";
 import Card from "../interfaces/card";
 import { postNewCard } from "../services/cardService";
+import { motion } from "framer-motion";
 
 interface NewCardProps {
   userInfo: any;
@@ -73,7 +74,7 @@ const NewCard: FunctionComponent<NewCardProps> = ({ userInfo }) => {
   });
   return (
     <>
-      <div className="w-50 container">
+      <div className="w-50 container header">
         <form onSubmit={formik.handleSubmit} className="text-center">
           <h3 className="display-3 container text-center">Add new card</h3>
           <hr className="hr" />
@@ -326,6 +327,7 @@ const NewCard: FunctionComponent<NewCardProps> = ({ userInfo }) => {
           <button
             type="submit"
             className="btn btn-success mt-4 w-100 mb-5"
+            // whileHover={{ scale: 1.5 }}
             disabled={!formik.isValid || !formik.dirty}
           >
             Post a new card

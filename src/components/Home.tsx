@@ -7,6 +7,7 @@ import { getUserByid } from "../services/userServices";
 import { SiteTheme } from "../App";
 import { infoMsg, successMsg } from "../services/feedbackService";
 import { motion } from "framer-motion";
+import DeleteModal from "./DeleteModal";
 
 interface HomeProps {
   userInfo: any;
@@ -14,16 +15,22 @@ interface HomeProps {
 
 const Home: FunctionComponent<HomeProps> = ({ userInfo }) => {
   let [cards, setCards] = useState<Card[]>([]);
-  let [dataUpdated, setDataUpdated] = useState<boolean>(false);
   let [favoritesCards, setFavoriteCards] = useState<number[]>();
   let theme = useContext(SiteTheme);
+  let [dataUpdated, setDataUpdated] = useState<boolean>(false);
   let render = () => setDataUpdated(!dataUpdated);
-  let handleDelete = (id: number) => {
-    deleteCard(id)
-      .then((res) => console.log(res))
-      .catch((err) => console.log(err));
-    render();
-  };
+  // let handleDelete = (id: number) => {
+  //   deleteCard(id)
+  //     .then((res) => {
+  //       console.log(res);
+  //       successMsg("Card deleted sucssesfully");
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //       infoMsg("somthing went wrong");
+  //     });
+  //   render();
+  // };
 
   let handleFav = async (cardId: number) => {
     try {
@@ -64,7 +71,8 @@ const Home: FunctionComponent<HomeProps> = ({ userInfo }) => {
                 <div className={`card theme${theme}`} style={{ width: "100%" }}>
                   <Link to={`/${card.id}`}>
                     <motion.img
-                      whileHover={{ height : 200 }}
+                      whileHover={{ height: 200 }}
+                      transition={{ delay: 0.5 }}
                       src={card.businessImgURL}
                       className="card-img-top"
                       alt={card.businessImgAlt}
@@ -115,13 +123,17 @@ const Home: FunctionComponent<HomeProps> = ({ userInfo }) => {
                       <div className="text-center mt-1">
                         {(userInfo.role === "admin" ||
                           userInfo.userId === card.ownerId) && (
-                          <motion.i
-                            className="fa-solid fa-lg fa-trash col-4"
-                            style={{ cursor: "pointer" }}
-                            onClick={() => handleDelete(card.id as number)}
-                            whileHover={{ scale: 1.5 }}
-                          ></motion.i>
-                        )}
+                          // <motion.i
+                          //   className="fa-solid fa-lg fa-trash col-4"
+                          //   style={{ cursor: "pointer" }}
+                          //   onClick={() => handleDelete(card.id as number)}
+                          //   whileHover={{ scale: 1.5 }}
+                          // ></motion.i>
+                          <DeleteModal
+                            cardId={card.id as number}
+                            dataUpdated={dataUpdated}
+                            setDataUpdated={setDataUpdated} 
+                        />)}
                         {userInfo.email &&
                           (favoritesCards?.includes(card.id as number) ? (
                             <motion.i

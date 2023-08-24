@@ -4,12 +4,13 @@ import { deleteCard, getCardsByUserId } from "../services/cardService";
 import { Link } from "react-router-dom";
 import EditCardModal from "./EditCardModal";
 import { SiteTheme } from "../App";
+import { motion } from "framer-motion";
 
 interface MyCardsProps {
   userInfo: any;
 }
 
-const MyCards: FunctionComponent<MyCardsProps> = ({userInfo}) => {
+const MyCards: FunctionComponent<MyCardsProps> = ({ userInfo }) => {
   let [userCards, setUserCards] = useState<Card[]>([]);
   let [dataUpdated, setDataUpdated] = useState<boolean>(false);
   let render = () => setDataUpdated(!dataUpdated);
@@ -19,16 +20,14 @@ const MyCards: FunctionComponent<MyCardsProps> = ({userInfo}) => {
     deleteCard(id)
       .then((res) => console.log(res))
       .catch((err) => console.log(err));
-      render()
-  }
-
+    render();
+  };
 
   useEffect(() => {
     getCardsByUserId(userInfo.userId)
       .then((res) => setUserCards(res.data))
       .catch((err) => console.log(err));
   }, [dataUpdated]);
-
 
   return (
     <div className="component-container">
@@ -40,43 +39,55 @@ const MyCards: FunctionComponent<MyCardsProps> = ({userInfo}) => {
       </div>
       <hr className={`hr${theme}`} />
       <div className="container">
-      <Link to={"/addnewcard"} className="mb-3 btn btn-success"><i className="fa-solid fa-plus"></i> Add New Card
-      </Link>
+        
+        <Link to={"/addnewcard"} className="mb-3 btn btn-success">
+          <i className="fa-solid fa-plus"></i> Add New Card
+        </Link>
         {userCards.length ? (
-          <table className={`${theme=="-dark" ? "table table-dark" : "table"}`}>
-          <thead>
-            <tr>
-              <th scope="col">#</th>
-              <th scope="col">Post Title</th>
-              <th scope="col">Posted At</th>
-              <th scope="col">Edit</th>
-              <th scope="col">Delete</th>
-            </tr>
-          </thead>
-          <tbody>
-            {userCards.map((card: Card, index: number) => (
-              
+          <table
+            className={`${theme == "-dark" ? "table table-dark" : "table"}`}
+          >
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Post Title</th>
+                <th scope="col">Posted At</th>
+                <th scope="col">Edit</th>
+                <th scope="col">Delete</th>
+              </tr>
+            </thead>
+            <tbody>
+              {userCards.map((card: Card, index: number) => (
                 <tr key={card.id}>
                   <th scope="row">{index + 1}</th>
                   <td>{card.title}</td>
                   <td>{card.postDate}</td>
                   <td>
-                    <EditCardModal cardId={card.id as any} userInfo={userInfo} dataUpdated={dataUpdated} setDataUpdated={setDataUpdated}/>
-                    
+                    <EditCardModal
+                      cardId={card.id as any}
+                      userInfo={userInfo}
+                      dataUpdated={dataUpdated}
+                      setDataUpdated={setDataUpdated}
+                    />
                   </td>
                   <td>
-                    <i className="ms-2 fa-solid fa-trash col-4"
-                    style={{cursor : "pointer"}}
-                    onClick={() => handleDelete(card.id as number)}></i>
+                    <motion.i
+                      className="ms-2 fa-solid fa-trash col-4"
+                      style={{ cursor: "pointer" }}
+                      onClick={() => handleDelete(card.id as number)}
+                      whileHover={{ scale: 1.1 }}
+                    ></motion.i>
                   </td>
                 </tr>
-              
-            ))}
-          </tbody>
-        </table>) : (
-          <h2 className="display-3 fs-2 text-center">it seems you haven't posted any card yet, click the add a new card button to post your business</h2>
+              ))}
+            </tbody>
+          </table>
+        ) : (
+          <h2 className="display-3 fs-2 text-center header">
+            it seems you haven't posted any card yet, click the add a new card
+            button to post your business
+          </h2>
         )}
-        
       </div>
     </div>
   );

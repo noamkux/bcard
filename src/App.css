@@ -23,10 +23,6 @@
     color: var(--text-color);
 }
 
-/* .fa-solid{
-    
-    text-shadow: "2px 2px 4px rgba(0, 0, 0, 0.5)",
-} */
 
 .dark .text{
     color: var(--text-color-secondery);
@@ -34,6 +30,28 @@
 
 .phone-dark{
     color: var(--text-color);
+}
+
+.dark .footer {
+    background-color: var(--color-secondery) !important;
+    color: var(--text-color) !important ;
+}
+
+.dark .form-control,
+.dark .form-control:focus,
+input#floatingEmailInput
+{
+    background-color: var(--color-primary) ;
+    color: var(--text-color);
+}
+
+
+.dark label{
+    color: var(--text-color) !important;
+}
+
+.dark label::after{
+    background-color: var(--color-primary) !important;
 }
 
 .card .theme-text-dark{
@@ -44,6 +62,12 @@
     color: var(--text-color-secondery);
     
 }
+
+
+/* .-dark.modal-header{
+    background-color: #526D82 !important;
+    color: #27374D !important;
+} */
 
 .dark .btn {
 color: white;
