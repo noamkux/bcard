@@ -81,7 +81,12 @@
       "houseNumber": "55",
       "role": "business",
       "country": "israek",
-      "id": 1
+      "id": 1,
+      "favCards": [
+        1,
+        2,
+        3
+      ]
     }
   ],
   "cards": [
