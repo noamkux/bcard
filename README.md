@@ -30,6 +30,7 @@ REACT_APP_GOOGLE_API_KEY=
 1. Start the local JSON server (assuming it's running on port 8000).
 2. Start the React development server: `npm start`
 3. Open your browser and go to `http://localhost:3000` to use the app.
+4. Login with the Email : test@test.com and password : test1234
 
 ## Dependencies
 

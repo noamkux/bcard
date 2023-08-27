@@ -2,8 +2,8 @@
   "users": [
     {
       "email": "tomer.kux@gmail.com",
-      "password": "noam_tomer",
-      "role": "admin",
+      "password": "tomer1234",
+      "role": "nonbusiness",
       "id": 2,
       "firstName": "noam",
       "middleName": "",
@@ -25,7 +25,7 @@
     },
     {
       "email": "noam.kux@gmail.com",
-      "password": "noam_tomer",
+      "password": "noam1234",
       "role": "admin",
       "id": 3,
       "firstName": "noam",
@@ -48,21 +48,21 @@
       ]
     },
     {
-      "email": "ihbjhb@bjgj.com",
-      "password": "ggegegegeg",
-      "firstName": "yahek",
+      "email": "moti@gmail.com",
+      "password": "moti1234",
+      "firstName": "moti",
       "middleName": "",
-      "lastName": "bjbjb",
-      "phone": "hjj",
+      "lastName": "yakov",
+      "phone": "0545-555555",
       "imageURL": "",
       "imageAlt": "",
-      "city": "gegegeg",
+      "city": "ashkelon",
       "zipCode": "",
       "state": "",
-      "street": "brbgeeg",
-      "houseNumber": "555",
+      "street": "zait",
+      "houseNumber": "55",
       "role": "business",
-      "country": "gegeg",
+      "country": "israel",
       "id": 4
     },
     {
@@ -79,8 +79,8 @@
       "state": "",
       "street": "yerushalyim",
       "houseNumber": "55",
-      "role": "business",
-      "country": "israek",
+      "role": "admin",
+      "country": "israel",
       "id": 1,
       "favCards": [
         1,
