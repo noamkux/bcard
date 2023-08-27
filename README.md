@@ -20,8 +20,9 @@ BCard is a web application built with React that allows users to discover and li
 
 Before running the project, you need to set up your environment variables. Create a `.env` file in the root directory of the project and add the following lines:
 
-REACT_APP_API=http://localhost:8000
-REACT_APP_GOOGLE_API_KEY=<Your Google Maps API Key>
+REACT_APP_API=http://localhost:8000,
+
+REACT_APP_GOOGLE_API_KEY=
 
 
 ## Usage
