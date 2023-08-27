@@ -1,11 +1,10 @@
 import { useFormik } from "formik";
-import { FunctionComponent, useContext } from "react";
+import { FunctionComponent} from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { successMsg, errorMsg } from "../services/feedbackService";
 import { addUser, checkUser } from "../services/userServices";
 import * as yup from "yup";
 import User from "../interfaces/user";
-import { SiteTheme } from "../App";
 import { motion } from "framer-motion";
 
 interface RegisterProps {
@@ -17,7 +16,6 @@ const Register: FunctionComponent<RegisterProps> = ({
   userInfo,
   setUserInfo,
 }) => {
-  
   let navigate = useNavigate();
   let formik = useFormik({
     initialValues: {
@@ -41,7 +39,11 @@ const Register: FunctionComponent<RegisterProps> = ({
       password: yup
         .string()
         .required()
-        .min(8, "Too short! Password should be at least 8 characters"),
+        .matches(
+          /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@%$#^&*-_*(])[A-Za-z\d!@%$#^&*-_*(]{8,}$/,
+          "Password must have at least 8 characters, one uppercase, one lowercase, one number and one special case character"
+        ),
+
       firstName: yup
         .string()
         .required()
@@ -68,7 +70,7 @@ const Register: FunctionComponent<RegisterProps> = ({
         if (res.data.length) {
           errorMsg("user Already Exsist");
         } else {
-          if (values.role?.toString() == "true") {
+          if (values.role?.toString() === "true") {
             values.role = "business";
           } else values.role = "nonbusiness";
           addUser(values);
@@ -89,7 +91,7 @@ const Register: FunctionComponent<RegisterProps> = ({
   });
   return (
     <>
-      <div className="w-50 container">
+      <div className="w-100 container">
         <form onSubmit={formik.handleSubmit} className="text-center">
           <h3 className="display-3 container text-center header">Register</h3>
           <div className="row mb-3">
@@ -325,7 +327,10 @@ const Register: FunctionComponent<RegisterProps> = ({
               inlineSize: "fit-content",
             }}
           >
-            <label className="form-check-label header" htmlFor="flexCheckDefault">
+            <label
+              className="form-check-label header"
+              htmlFor="flexCheckDefault"
+            >
               Register As Buissness
             </label>
             <input
@@ -343,7 +348,7 @@ const Register: FunctionComponent<RegisterProps> = ({
             type="submit"
             className="btn btn-success mt-4 w-100"
             disabled={!formik.isValid || !formik.dirty}
-            whileHover={{scale : 1.1,}}
+            whileHover={{ scale: 1.1 }}
           >
             Register
           </motion.button>

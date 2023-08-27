@@ -1,37 +1,40 @@
-  import { FunctionComponent, useContext } from "react";
-  import { NavLink, useNavigate } from "react-router-dom";
-  import { SiteTheme } from "../App";
-  import { color } from "framer-motion";
+import { FunctionComponent, useEffect, useState } from "react";
+import { NavLink, useNavigate } from "react-router-dom";
+import User from "../interfaces/user";
+import { getUserByid } from "../services/userServices";
 
-  interface NavBarProps {
-    userInfo: any;
-    setUserInfo: Function;
-    darkMode: boolean;
-    setDarkMode: Function;
-  }
+interface NavBarProps {
+  userInfo: any;
+  setUserInfo: Function;
+  darkMode: boolean;
+  setDarkMode: Function;
+}
 
+const NavBar: FunctionComponent<NavBarProps> = ({
+  userInfo,
+  setUserInfo,
+  darkMode,
+  setDarkMode,
+}) => {
+  let navigate = useNavigate();
 
-  
-  const NavBar: FunctionComponent<NavBarProps> = ({
-    userInfo,
-    setUserInfo,
-    darkMode,
-    setDarkMode,
-  }) => {
-    let navigate = useNavigate();
+  let [userDetails, setUserDetails] = useState<User>();
+  let handleLogout = () => {
+    setUserInfo("");
+    sessionStorage.removeItem("userInfo");
+    navigate("/");
+  };
 
-    let theme = useContext(SiteTheme);
-    let handleLogout = () => {
-      setUserInfo("");
-      sessionStorage.removeItem("userInfo");
-      navigate("/");
-    };
+  useEffect(() => {
+    getUserByid(userInfo.userId)
+      .then((res) => setUserDetails(res.data))
+      .catch((err) => console.log(err));
+  }, [userInfo.userId]);
 
-    
-    return (
-      <>
-        <nav className={`navbar navbar-expand-lg navbar-dark bg-dark`}>
-          <div className="container-fluid">
+  return (
+    <>
+      <nav className={`navbar navbar-expand-lg navbar-dark bg-dark`}>
+        <div className="container-fluid">
           <NavLink className="navbar-brand ms-1" to={"/"}>
             BCARD
           </NavLink>
@@ -48,7 +51,10 @@
               <span className="navbar-toggler-icon"></span>
             </button>
 
-            <div className="collapse navbar-collapse" id="navbarSupportedContent">
+            <div
+              className="collapse navbar-collapse"
+              id="navbarSupportedContent"
+            >
               <ul className="navbar-nav mr-auto">
                 <li className="nav-item active">
                   <NavLink className="nav-link" to={"/about"}>
@@ -67,7 +73,8 @@
                     </li>
                   </>
                 )}
-                {(userInfo.role === "business" || userInfo.role === "admin") && (
+                {(userInfo.role === "business" ||
+                  userInfo.role === "admin") && (
                   <>
                     <li className="nav-item">
                       <NavLink className="nav-link" to={"/mycards"}>
@@ -124,21 +131,37 @@
               userInfo.role === "admin") && (
               <div className="nav-link text-white me-3 pt-1">
                 <NavLink className="nav-link" to={"/profile"}>
-                  Profile
+                  {userDetails?.gender === "male" ? (
+                    <img
+                    alt="user profile pic"
+                      className="mx-2"
+                      src="images/CardsImg/manProfile.png"
+                      style={{ width: "30px", height: "30px" }}
+                    ></img>
+                  ) : (
+                    <img
+                    alt="user profile pic"
+                      className="mx-2"
+                      src="images\CardsImg\womanProfile.png"
+                      style={{ width: "30px", height: "30px" }}
+                    ></img>
+                  )}
                 </NavLink>
               </div>
             )}
             <i
               className="fa-xl me-3 mt-3 fa-solid fa-glasses"
-              onClick={ () => {setDarkMode(!darkMode)}}
+              onClick={() => {
+                setDarkMode(!darkMode);
+              }}
               style={{ cursor: "pointer", color: "white" }}
               title="Toggle Dark Mode"
             />
           </form>
-          </div>
-        </nav>
-      </>
-    );
-  };
+        </div>
+      </nav>
+    </>
+  );
+};
 
-  export default NavBar;
+export default NavBar;

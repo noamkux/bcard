@@ -1,4 +1,4 @@
-import React, { useEffect, useState, createContext } from "react";
+import React, {useState, createContext } from "react";
 import "./App.css";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
@@ -35,8 +35,7 @@ function App() {
     <div className={`App  ${darkMode ? "dark" : "light"}`}>
       <SiteTheme.Provider value={darkMode ? themes.dark : themes.light}>
         <ToastContainer theme={`${darkMode ? "dark" : "light"}`} />
-
-        <LoadScript googleMapsApiKey="AIzaSyBCC0p8BEYu5p51WHCJXpBRaKF93XeLm8I">
+        <LoadScript googleMapsApiKey={`${process.env.REACT_APP_GOOGLE_API_KEY}`}>
           <Router>
             <NavBar
               userInfo={userInfo}
@@ -63,7 +62,7 @@ function App() {
                 element={<NewCard userInfo={userInfo} />}
               />
               <Route path="/about" element={<About />} />
-              <Route path="/:cardId" element={<CardDetails />} />
+              <Route path="/cards/:cardId" element={<CardDetails />} />
               <Route
                 path="/favcards"
                 element={<FavCards userInfo={userInfo} />}
@@ -82,7 +81,7 @@ function App() {
             <Footer 
               userInfo={userInfo} />
           </Router>
-        </LoadScript>
+          </LoadScript>
       </SiteTheme.Provider>
     </div>
   );

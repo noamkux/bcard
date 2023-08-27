@@ -28,6 +28,8 @@ const Footer: FunctionComponent<FooterProps> = ({ userInfo }) => {
                   About Us
                 </NavLink>
               </p>
+              
+              {userInfo.email && (<>
               <p>
                 <NavLink to="/favcards" className="text-reset">
                   Favorite Cards
@@ -37,7 +39,7 @@ const Footer: FunctionComponent<FooterProps> = ({ userInfo }) => {
                 <NavLink to="/mycards" className="text-reset">
                   My Cards
                 </NavLink>
-              </p>
+              </p></>)}
               {userInfo.role === "admin" && (
                 <p>
                   <NavLink to="/sandbox" className="text-reset">

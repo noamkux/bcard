@@ -1,7 +1,7 @@
 import axios from "axios";
 import User from "../interfaces/user";
 
-let api: string = "http://localhost:8000/users";
+let api: string = `${process.env.REACT_APP_API}/users`;
 
 export function checkUser(userToCheck: User) {
   return axios.get(

@@ -6,6 +6,7 @@ import Card from "../interfaces/card";
 import { Link } from "react-router-dom";
 import { handleUserFav } from "../services/favoritesService";
 import { successMsg, infoMsg } from "../services/feedbackService";
+import { motion } from "framer-motion";
 
 interface FavCardsProps {
   userInfo: any;
@@ -18,12 +19,12 @@ const FavCards: FunctionComponent<FavCardsProps> = ({ userInfo }) => {
   const render = () => setDataUpdated(!dataUpdated);
   let deleteFav = (idToDelete: number, userId: number) => {
     handleUserFav(idToDelete, userId)
-    .then((res) => {
-      if (res) {
-        successMsg("Added to favorites");
-      } else infoMsg("Removed from favorites");
-    })
-    .catch((err) => console.log(err));
+      .then((res) => {
+        if (res) {
+          successMsg("Added to favorites");
+        } else infoMsg("Removed from favorites");
+      })
+      .catch((err) => console.log(err));
     render();
   };
   useEffect(() => {
@@ -38,7 +39,7 @@ const FavCards: FunctionComponent<FavCardsProps> = ({ userInfo }) => {
       }
     };
     fetchData();
-  }, [dataUpdated]);
+  }, [dataUpdated, userInfo.userId]);
 
   return (
     <div className="component-container">
@@ -56,8 +57,10 @@ const FavCards: FunctionComponent<FavCardsProps> = ({ userInfo }) => {
             userDetails?.favCards?.includes(card.id as number) ? (
               <div className="col-md-4 mb-5 " key={card.id}>
                 <div className="card" style={{ width: "100%" }}>
-                  <Link to={`/${card.id}`}>
-                    <img
+                  <Link to={`/cards/${card.id}`}>
+                    <motion.img
+                      whileHover={{ height: 200 }}
+                      transition={{ delay: 0.5 }}
                       src={card.businessImgURL}
                       className="card-img-top"
                       alt={card.businessImgAlt}
@@ -68,7 +71,7 @@ const FavCards: FunctionComponent<FavCardsProps> = ({ userInfo }) => {
                   <div className="card-body">
                     <Link
                       style={{ textDecoration: "none", color: "black" }}
-                      to={`/${card.id}`}
+                      to={`cards/${card.id}`}
                     >
                       <h5 className="card-title text-center">
                         {card.title.charAt(0).toUpperCase() +
@@ -80,6 +83,7 @@ const FavCards: FunctionComponent<FavCardsProps> = ({ userInfo }) => {
                     </Link>
                     <a
                       href={"https://" + card.webSite}
+                      rel="noreferrer"
                       target="_blank"
                       className="btn btn-primary w-100"
                     >
@@ -101,7 +105,8 @@ const FavCards: FunctionComponent<FavCardsProps> = ({ userInfo }) => {
                   </div>
                 </div>
               </div>
-            ) : (""
+            ) : (
+              ""
             )
           )}
         </div>

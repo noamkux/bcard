@@ -1,68 +1,68 @@
-.dark{
-    --color-primary: #27374D;
-    --color-secondery: #526D82;
-    --text-color : #e2ebf3;
-    --text-color-secondery : #c0c6cb; 
+.dark {
+  --color-primary: #27374d;
+  --color-secondery: #526d82;
+  --text-color: #e2ebf3;
+  --text-color-secondery: #c0c6cb;
 }
-.light{
-    --color-primary: white
-}
-
-.App{
-    background-color: var(--color-primary);
-    
+.light {
+  --color-primary: white;
 }
 
-.card{ height: 100% !important;}
-
-.dark .card{
-    background-color: var(--color-secondery); 
+.App {
+  background-color: var(--color-primary);
 }
 
-.dark .header{
-    color: var(--text-color);
+.card {
+  height: 100% !important;
 }
 
-
-.dark .text{
-    color: var(--text-color-secondery);
+.dark .card {
+  background-color: var(--color-secondery);
 }
 
-.phone-dark{
-    color: var(--text-color);
+.dark .header {
+  color: var(--text-color);
+}
+
+.dark .text {
+  color: var(--text-color-secondery);
+}
+
+.phone-dark {
+  color: var(--text-color);
 }
 
 .dark .footer {
-    background-color: var(--color-secondery) !important;
-    color: var(--text-color) !important ;
+  background-color: var(--color-secondery) !important;
+  color: var(--text-color) !important ;
 }
 
 .dark .form-control,
 .dark .form-control:focus,
-input#floatingEmailInput
-{
-    background-color: var(--color-primary) ;
-    color: var(--text-color);
+input#floatingEmailInput {
+  background-color: var(--color-primary);
+  color: var(--text-color);
 }
 
-
-.dark label{
-    color: var(--text-color) !important;
+.dark label {
+  color: var(--text-color) !important;
 }
 
-.dark label::after{
-    background-color: var(--color-primary) !important;
+.dark label::after {
+  background-color: var(--color-primary) !important;
 }
 
-.card .theme-text-dark{
-    color: var(--text-color);
+.card .theme-text-dark {
+  color: var(--text-color);
 }
 
-.dark .card-text{
-    color: var(--text-color-secondery);
-    
+.dark .card-text {
+  color: var(--text-color-secondery);
 }
 
+.dark .hr {
+  color: var(--text-color);
+}
 
 /* .-dark.modal-header{
     background-color: #526D82 !important;
@@ -70,31 +70,64 @@ input#floatingEmailInput
 } */
 
 .dark .btn {
-color: white;
-background-color: var(--color-primary);
+  color: white;
+  background-color: var(--color-primary);
 }
 
-.card-body .card-footer{
-    background-color: white;
+.card-body .card-footer {
+  background-color: white;
 }
 
-.dark .card-body  .card-footer{
-    color: var(--text-color-secondery);
-    background-color: var(--color-secondery);
+.dark .card-body .card-footer {
+  color: var(--text-color-secondery);
+  background-color: var(--color-secondery);
 }
 
-.hr-dark{
-    color: var(--text-color);
+.hr-dark {
+  color: var(--text-color);
 }
 
-.component-container{
-    height: 100vh;
+.component-container {
+  height: 100vh;
 }
 
-.card-footer{
-    border-top: 0px !important;
+.card-details-container{
+  padding-left: 50px;
+  padding-right: 50px;
 }
 
-.phone{
-    color: black;
+.card-footer {
+  border-top: 0px !important;
+}
+
+.phone {
+  color: black;
+}
+
+.map-container {
+  width: 40vw;
+  height: 75%;
+}
+.cardDetailsImg {
+  width: 70%;
+}
+
+@media (max-width: 500px) {
+  .map-container {
+    width: 90vw;
+  }
+
+  .component-container {
+    height: 100%;
+  }
+
+  .card-details-container{
+    padding-left: 5px;
+    padding-right: 5px;
+  }
+  
+  .cardDetailsImg {
+    margin-top: 300px;
+    width: 100%;
+  }
 }

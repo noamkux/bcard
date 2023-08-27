@@ -1,10 +1,11 @@
 import { FunctionComponent, useContext, useEffect, useState } from "react";
 import User from "../interfaces/user";
 import { deleteUser, getAllUsers } from "../services/userServices";
-import EditRole from "./EditRoleModal";
 import { getCardsByUserId } from "../services/cardService";
 import { SiteTheme } from "../App";
 import EditRoleModal from "./EditRoleModal";
+import { motion } from "framer-motion";
+import { Modal, Button } from "react-bootstrap";
 
 interface SandboxProps {
   userInfo: any;
@@ -16,6 +17,10 @@ const Sandbox: FunctionComponent<SandboxProps> = ({ userInfo }) => {
   let theme = useContext(SiteTheme);
   let [dataUpdated, setDataUpdated] = useState<boolean>(false);
   let render = () => setDataUpdated(!dataUpdated);
+
+  const [show, setShow] = useState(false);
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
 
   let handleDelete = (id: number) => {
     deleteUser(id)
@@ -60,8 +65,9 @@ const Sandbox: FunctionComponent<SandboxProps> = ({ userInfo }) => {
       <hr className="hr" />
       <div className="container">
         {users.length ? (
+          <div className="table-responsive">
           <table
-            className={`${theme == "-dark" ? "table table-dark" : "table"}`}
+            className={`${theme === "-dark" ? "table table-dark" : "table"} `}
           >
             <thead>
               <tr>
@@ -78,7 +84,7 @@ const Sandbox: FunctionComponent<SandboxProps> = ({ userInfo }) => {
             <tbody>
               {users.map((user: User, index: number) => (
                 <tr key={user.id}>
-                  <td scope="row">{index + 1}</td>
+                  <td>{index + 1}</td>
                   <td>
                     {user.firstName} {user.lastName}
                   </td>
@@ -94,26 +100,61 @@ const Sandbox: FunctionComponent<SandboxProps> = ({ userInfo }) => {
                     />
                   </td>
                   <td>
-                    {userInfo.userId == user.id ? (
+                    {userInfo.userId === user.id ? (
                       <>
-                        <i
+                        <motion.i
                           className="ms-2 fa-solid fa-trash col-4"
                           title="you can't delete yourself"
                           style={{ cursor: "not-allowed" }}
-                        ></i>
+                          whileHover={{ scale: 1.2 }}
+                        ></motion.i>
                       </>
                     ) : (
-                      <i
-                        className="ms-2 fa-solid fa-trash col-4"
-                        style={{ cursor: "pointer" }}
-                        onClick={() => handleDelete(user.id as number)}
-                      ></i>
+                      <>
+                        <motion.i
+                          className="ms-2 fa-solid fa-trash col-4"
+                          style={{ cursor: "pointer" }}
+                          onClick={() => handleShow()}
+                          whileHover={{ scale: 1.2 }}
+                        ></motion.i>
+
+                        <Modal
+                          show={show}
+                          onHide={handleClose}
+                          backdrop="static"
+                          keyboard={false}
+                        >
+                          <Modal.Header closeButton>
+                            <Modal.Title>
+                              Are You Sure you want to Delete This Card ?
+                            </Modal.Title>
+                          </Modal.Header>
+                          <Modal.Body>
+                            <Button
+                              variant="secondary"
+                              className="mt-2 w-100"
+                              onClick={() => handleDelete(user.id as number)}
+                            >
+                              Delete
+                            </Button>
+
+                            <Button
+                              variant="secondary"
+                              className="mt-2 w-100"
+                              onClick={handleClose}
+                            >
+                              Back
+                            </Button>
+                          </Modal.Body>
+                        </Modal>
+                      </>
                     )}
                   </td>
                 </tr>
               ))}
             </tbody>
           </table>
+          </div>
         ) : (
           <h2 className="display-3 fs-2 text-center">
             it seems you haven't posted any card yet, click the add a new card

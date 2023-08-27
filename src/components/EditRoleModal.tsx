@@ -5,6 +5,7 @@ import User from "../interfaces/user";
 import { getUserByid, updateUserById } from "../services/userServices";
 import { successMsg, errorMsg } from "../services/feedbackService";
 import { SiteTheme } from "../App";
+import { motion } from "framer-motion";
 
 interface EditRoleModalProps {
   userId: number;
@@ -59,11 +60,12 @@ const EditRoleModal: FunctionComponent<EditRoleModalProps> = ({
 
   return (
     <>
-      <i
+      <motion.i
         className="ms-2 fa-solid fa-file-pen"
         style={{ cursor: "pointer" }}
         onClick={handleShow}
-      ></i>
+        whileHover={{ scale: 1.2 }}
+      ></motion.i>
 
       <Modal
         show={show}

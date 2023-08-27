@@ -1,25 +1,6 @@
 {
   "users": [
     {
-      "email": "gilad.kux@gmail.com",
-      "password": "noam_tomer",
-      "role": "admin",
-      "id": 1,
-      "firstName": "noam",
-      "middleName": "",
-      "lastName": "kux",
-      "phone": "0525433577",
-      "imageURL": "",
-      "gender": "male",
-      "country": "israel",
-      "state": "",
-      "city": "tel-aviv",
-      "street": "dizingof",
-      "houseNumber": "53",
-      "zipCode": "",
-      "imageAlt": ""
-    },
-    {
       "email": "tomer.kux@gmail.com",
       "password": "noam_tomer",
       "role": "admin",
@@ -52,7 +33,7 @@
       "lastName": "kux",
       "phone": "0525433577",
       "imageURL": "",
-      "gender": "male",
+      "gender": "female",
       "country": "israel",
       "state": "",
       "city": "tel-aviv",
@@ -62,7 +43,8 @@
       "imageAlt": "",
       "favCards": [
         5,
-        2
+        2,
+        13
       ]
     },
     {
@@ -99,7 +81,7 @@
       "houseNumber": "55",
       "role": "business",
       "country": "israek",
-      "id": 5
+      "id": 1
     }
   ],
   "cards": [

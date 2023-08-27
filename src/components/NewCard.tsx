@@ -1,11 +1,10 @@
 import { useFormik } from "formik";
-import { FunctionComponent, useEffect, useState } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import { FunctionComponent } from "react";
+import { useNavigate } from "react-router-dom";
 import { successMsg, errorMsg } from "../services/feedbackService";
 import * as yup from "yup";
 import Card from "../interfaces/card";
 import { postNewCard } from "../services/cardService";
-import { motion } from "framer-motion";
 
 interface NewCardProps {
   userInfo: any;
@@ -74,7 +73,7 @@ const NewCard: FunctionComponent<NewCardProps> = ({ userInfo }) => {
   });
   return (
     <>
-      <div className="w-50 container header">
+      <div className="w-100 container header">
         <form onSubmit={formik.handleSubmit} className="text-center">
           <h3 className="display-3 container text-center">Add new card</h3>
           <hr className="hr" />

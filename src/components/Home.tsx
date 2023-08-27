@@ -1,7 +1,7 @@
 import { FunctionComponent, useContext, useEffect, useState } from "react";
 import Card from "../interfaces/card";
-import { deleteCard, getAllCards } from "../services/cardService";
-import { Link } from "react-router-dom";
+import { getAllCards } from "../services/cardService";
+import { Link, useNavigate } from "react-router-dom";
 import { handleUserFav } from "../services/favoritesService";
 import { getUserByid } from "../services/userServices";
 import { SiteTheme } from "../App";
@@ -19,6 +19,7 @@ const Home: FunctionComponent<HomeProps> = ({ userInfo }) => {
   let theme = useContext(SiteTheme);
   let [dataUpdated, setDataUpdated] = useState<boolean>(false);
   let render = () => setDataUpdated(!dataUpdated);
+  let navigate = useNavigate()
   // let handleDelete = (id: number) => {
   //   deleteCard(id)
   //     .then((res) => {
@@ -40,17 +41,19 @@ const Home: FunctionComponent<HomeProps> = ({ userInfo }) => {
       } else infoMsg("Removed from favorites");
       render();
     } catch (error) {
-      console.log(error);
     }
   };
   useEffect(() => {
     getAllCards()
       .then((res) => setCards(res.data))
       .catch((err) => console.log(err));
+      
+    if (userInfo.email){
     getUserByid(userInfo.userId)
       .then((res) => setFavoriteCards(res.data.favCards))
       .catch((err) => console.log(err));
-  }, [dataUpdated]);
+    }
+  }, [dataUpdated, userInfo.email, userInfo.userId]);
 
   return (
     <>
@@ -69,7 +72,7 @@ const Home: FunctionComponent<HomeProps> = ({ userInfo }) => {
             {cards.map((card: Card) => (
               <div className="col-lg-4 mb-3" key={card.id}>
                 <div className={`card theme${theme}`} style={{ width: "100%" }}>
-                  <Link to={`/${card.id}`}>
+                  <Link to={`cards/${card.id}`}>
                     <motion.img
                       whileHover={{ height: 200 }}
                       transition={{ delay: 0.5 }}
@@ -82,7 +85,7 @@ const Home: FunctionComponent<HomeProps> = ({ userInfo }) => {
                   <div className="card-body">
                     <Link
                       style={{ textDecoration: "none", color: "black" }}
-                      to={`/${card.id}`}
+                      to={`/cards/${card.id}`}
                     >
                       <h5
                         className={`card-title text-center theme-text${theme}`}
@@ -99,22 +102,18 @@ const Home: FunctionComponent<HomeProps> = ({ userInfo }) => {
                     <p className="card-text" style={{ height: "5rem" }}>
                       {card.description}
                     </p>
-                    <a
-                      href={"https://" + card.webSite}
-                      target="_blank"
+                    <div
                       className="d-flex justify-content-center text-decoration-none"
                     >
                       <motion.button
                         whileHover={{ scale: 1.1 }}
                         style={{ width: "80%" }}
                         className="btn btn-outline-primary"
+                        onClick={() => navigate(`/${card.id}`)}
                       >
-                        Go To{" "}
-                        {card.title.charAt(0).toUpperCase() +
-                          card.title.slice(1)}{" "}
-                        Website
+                        Click Here For More Details
                       </motion.button>
-                    </a>
+                    </div>
                     <div className="card-footer text-center">
                       <p className="mb-3">
                         Address :{card.city}, {card.street} {card.houseNumber},{" "}
@@ -123,12 +122,7 @@ const Home: FunctionComponent<HomeProps> = ({ userInfo }) => {
                       <div className="text-center mt-1">
                         {(userInfo.role === "admin" ||
                           userInfo.userId === card.ownerId) && (
-                          // <motion.i
-                          //   className="fa-solid fa-lg fa-trash col-4"
-                          //   style={{ cursor: "pointer" }}
-                          //   onClick={() => handleDelete(card.id as number)}
-                          //   whileHover={{ scale: 1.5 }}
-                          // ></motion.i>
+        
                           <DeleteModal
                             cardId={card.id as number}
                             dataUpdated={dataUpdated}
@@ -142,7 +136,7 @@ const Home: FunctionComponent<HomeProps> = ({ userInfo }) => {
                               style={{ cursor: "pointer", color: "red" }}
                               whileHover={{ scale: 1.5 }}
                             ></motion.i>
-                          ) : theme == "" ? (
+                          ) : theme === "" ? (
                             <motion.i
                               className="fa-solid fa-heart fa-lg col-4"
                               onClick={() => handleFav(card.id as number)}

@@ -1,7 +1,7 @@
 import axios from "axios";
 import Card from "../interfaces/card";
 
-let api: string = "http://localhost:8000/cards";
+let api: string = `${process.env.REACT_APP_API}/cards`;
 
 export function getAllCards() {
   return axios.get(api);

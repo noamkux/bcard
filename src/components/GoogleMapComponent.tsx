@@ -1,4 +1,4 @@
-import { LoadScript, GoogleMap, Marker } from "@react-google-maps/api";
+import { GoogleMap, Marker } from "@react-google-maps/api";
 import axios from "axios";
 import { FunctionComponent, useEffect, useState } from "react";
 
@@ -34,9 +34,8 @@ const GoogleMapComponent: FunctionComponent<GoogleMapComponentProps> = ({
         const location = response.data.results[0]?.geometry?.location;
 
         if (location) {
-          console.log("Geocoding response:", location);
           setCoordinates({ lat: location.lat, lng: location.lng });
-          setIsLoaded(true); // Set isLoaded to true when the request is done
+          setIsLoaded(true);
       
         } 
       })
@@ -44,11 +43,11 @@ const GoogleMapComponent: FunctionComponent<GoogleMapComponentProps> = ({
         console.error("Error fetching geocoding data:", error);
       })
       
-  }, [city, street, houseNumber, apiKey]);
+  }, [city, street, houseNumber, apiKey, geocodeUrl]);
 
   return (
     <>
-        {isLoaded && ( // Only render the map when isLoaded is true
+        {isLoaded && (
           <GoogleMap
         
             mapContainerStyle={containerStyle}
