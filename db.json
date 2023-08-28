@@ -1,13 +1,13 @@
 {
   "users": [
     {
-      "email": "tomer.kux@gmail.com",
-      "password": "tomer1234",
+      "email": "shimon.rozenfeld@gmail.com",
+      "password": "shimon1234",
       "role": "nonbusiness",
       "id": 2,
       "firstName": "noam",
       "middleName": "",
-      "lastName": "kux",
+      "lastName": "rozenfeld",
       "phone": "0525433577",
       "imageURL": "",
       "gender": "male",
@@ -31,9 +31,9 @@
       "firstName": "noam",
       "middleName": "",
       "lastName": "kux",
-      "phone": "0525433577",
+      "phone": "0525555577",
       "imageURL": "",
-      "gender": "female",
+      "gender": "male",
       "country": "israel",
       "state": "",
       "city": "tel-aviv",
@@ -67,7 +67,7 @@
     },
     {
       "email": "test@test.com",
-      "password": "test1234",
+      "password": "Test1234",
       "firstName": "test",
       "middleName": "test",
       "lastName": "test",
@@ -89,24 +89,6 @@
         5,
         2
       ]
-    },
-    {
-      "email": "nlnl@gmail.com",
-      "password": "gufhfhjFJFVJ1314",
-      "firstName": "asasass",
-      "middleName": "dw",
-      "lastName": "dwdwdw",
-      "phone": "0528742569",
-      "imageURL": "",
-      "imageAlt": "",
-      "country": "use",
-      "city": "isr",
-      "gender": "female",
-      "state": "",
-      "street": "55",
-      "houseNumber": "5",
-      "role": "nonbusiness",
-      "id": 5
     }
   ],
   "cards": [
