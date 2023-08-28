@@ -52,7 +52,7 @@ const NewCard: FunctionComponent<NewCardProps> = ({ userInfo }) => {
       country: yup.string().min(3).required(),
       city: yup.string().min(2).required(),
       houseNumber: yup.number().required().typeError("A number is required"),
-      zipcode: yup.number().min(2),
+      zipcode: yup.number().typeError("A number is required"),
       website: yup.string(),
     }),
     onSubmit: (values: Card) => {

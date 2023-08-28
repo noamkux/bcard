@@ -12,7 +12,6 @@ const Profile: FunctionComponent<ProfileProps> = ({ userInfo }) => {
   let navigate = useNavigate();
 
   let navigateHome = () => {
-    console.log("navigate");
     navigate("/");
   };
 

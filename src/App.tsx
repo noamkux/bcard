@@ -27,7 +27,7 @@ export const SiteTheme = createContext(themes.light);
 function App() {
   let [userInfo, setUserInfo] = useState(
     JSON.parse(sessionStorage.getItem("userInfo") as string) == null
-      ? { email: false, isAdmin: false }
+      ? { email: false, role: false , userId : false  }
       : JSON.parse(sessionStorage.getItem("userInfo") as string)
   );
   const [darkMode, setDarkMode] = useState<boolean>(false);

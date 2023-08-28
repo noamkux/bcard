@@ -1,5 +1,5 @@
 import { useFormik } from "formik";
-import { FunctionComponent} from "react";
+import { FunctionComponent } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { successMsg, errorMsg } from "../services/feedbackService";
 import { addUser, checkUser } from "../services/userServices";
@@ -27,8 +27,9 @@ const Register: FunctionComponent<RegisterProps> = ({
       phone: "",
       imageURL: "",
       imageAlt: "",
+      country: "",
       city: "",
-      zipCode: "",
+      gender: "",
       state: "",
       street: "",
       houseNumber: "",
@@ -56,13 +57,16 @@ const Register: FunctionComponent<RegisterProps> = ({
         .required()
         .min(2, "Too short! last Name should be at least 2 characters"),
       phone: yup.string().required().min(2),
-      imageURL: yup.string().min(2),
-      imageAlt: yup.string().min(2),
-      state: yup.string().min(2),
-      country: yup.string().min(3).required(),
-      city: yup.string().min(2).required(),
+      imageURL: yup.string(),
+      imageAlt: yup.string(),
+      state: yup.string(),
+      country: yup
+        .string()
+        .min(3, "country must have at least 3 letters")
+        .required(),
+      city: yup.string().min(2, "city must have at least 3 letters").required(),
       houseNumber: yup.number().required(),
-      zipCode: yup.number().min(2),
+      gender: yup.string().required(),
       role: yup.string(),
     }),
     onSubmit: (values: User) => {
@@ -73,18 +77,27 @@ const Register: FunctionComponent<RegisterProps> = ({
           if (values.role?.toString() === "true") {
             values.role = "business";
           } else values.role = "nonbusiness";
-          addUser(values);
-          navigate("/");
-          successMsg(`Welcom ${values.firstName} ${values.lastName}`);
-          setUserInfo(values);
-          sessionStorage.setItem(
-            "userInfo",
-            JSON.stringify({
-              email: values.email,
-              role: values.role,
-              userId: values.id,
+          addUser(values)
+            .then((res) => {
+              values.id = res.data.id;
+              setUserInfo({
+                email: values.email,
+                role: values.role,
+                userId: values.id,
+              });
+              sessionStorage.setItem(
+                "userInfo",
+                JSON.stringify({
+                  email: values.email,
+                  role: values.role,
+                  userId: values.id,
+                })
+              );
+              successMsg(`Welcom ${values.firstName} ${values.lastName}`);
+
+              navigate("/");
             })
-          );
+            .catch((err) => console.log(err));
         }
       });
     },
@@ -307,18 +320,32 @@ const Register: FunctionComponent<RegisterProps> = ({
               )}
             </div>
             <div className=" g-2 form-floating col-6">
-              <input
-                name="zipCode"
+              {/* <input
+                name="gender"
                 type="text"
                 className="form-control"
-                id="zipCode"
+                id="gender"
                 placeholder="Image Alt"
                 onChange={formik.handleChange}
-                value={formik.values.zipCode}
+                value={formik.values.gender}
                 onBlur={formik.handleBlur}
-              ></input>
+              ></input> */}
 
-              <label htmlFor="zipCode">zip Code</label>
+              <select
+                className="form-select"
+                aria-label="Default select example"
+                onChange={formik.handleChange}
+                value={(formik.values.gender)}
+                onBlur={formik.handleBlur}
+                defaultValue={""}
+                name="gender"
+              >
+                <option value={""}>Open this select menu</option>
+                <option value={"female"}>Female</option>
+                <option value={"male"}>Male</option>
+              </select>
+
+              <label htmlFor="gender">gender*</label>
             </div>
           </div>
           <div

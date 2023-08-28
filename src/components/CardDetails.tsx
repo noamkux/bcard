@@ -41,6 +41,22 @@ const CardDetails: FunctionComponent<CardDetailsProps> = () => {
           </h5>
           <p className="display-6 fs-4 text">{currentCard?.subtitle}</p>
           <p className="display-6 fs-4 text">{currentCard?.description}</p>
+          
+        <a
+            href={"https://" + currentCard.webSite}
+            rel="noreferrer"
+            target="_blank"
+            className="text-decoration-none"
+          >
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              style={{ width: "90%"}}
+              className="btn btn-outline-primary my-3"
+            >
+              Go To {currentCard.title.charAt(0).toUpperCase() + currentCard.title.slice(1)}{" "}
+              Website
+            </motion.button>
+          </a>
           <p className="text">
             Located at Address :{currentCard?.city}, {currentCard?.street}{" "}
             {currentCard?.houseNumber}, {currentCard?.country}
@@ -52,27 +68,12 @@ const CardDetails: FunctionComponent<CardDetailsProps> = () => {
               houseNumber={currentCard?.houseNumber as string}
               apiKey="AIzaSyBCC0p8BEYu5p51WHCJXpBRaKF93XeLm8I"
             />
-             <a
-            href={"https://" + currentCard.webSite}
-            rel="noreferrer"
-            target="_blank"
-            className="text-decoration-none"
-          >
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              style={{ width: "100%"}}
-              className="btn btn-outline-primary mt-3"
-            >
-              Go To {currentCard.title.charAt(0).toUpperCase() + currentCard.title.slice(1)}{" "}
-              Website
-            </motion.button>
-          </a>
+             
           </div>
-         
         </div>
         <div className="col-md-5 p-0">
           <img
-            className="cardDetailsImg"
+            className="cardDetailsImg rounded-3"
             src={currentCard?.businessImgURL}
             alt={currentCard?.businessImgAlt}
             style={{ width: "100%", height: "50vh", objectFit: "cover" }}
@@ -80,6 +81,7 @@ const CardDetails: FunctionComponent<CardDetailsProps> = () => {
         </div>
       </div>
     </div>
+    
     ) : (<>Loading...</>)}
   
   

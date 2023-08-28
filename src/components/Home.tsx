@@ -7,7 +7,7 @@ import { getUserByid } from "../services/userServices";
 import { SiteTheme } from "../App";
 import { infoMsg, successMsg } from "../services/feedbackService";
 import { motion } from "framer-motion";
-import DeleteModal from "./DeleteModal";
+import DeleteCardModal from "./DeleteCardModal";
 
 interface HomeProps {
   userInfo: any;
@@ -20,19 +20,6 @@ const Home: FunctionComponent<HomeProps> = ({ userInfo }) => {
   let [dataUpdated, setDataUpdated] = useState<boolean>(false);
   let render = () => setDataUpdated(!dataUpdated);
   let navigate = useNavigate()
-  // let handleDelete = (id: number) => {
-  //   deleteCard(id)
-  //     .then((res) => {
-  //       console.log(res);
-  //       successMsg("Card deleted sucssesfully");
-  //     })
-  //     .catch((err) => {
-  //       console.log(err);
-  //       infoMsg("somthing went wrong");
-  //     });
-  //   render();
-  // };
-
   let handleFav = async (cardId: number) => {
     try {
       const response = await handleUserFav(cardId, userInfo.userId);
@@ -46,13 +33,12 @@ const Home: FunctionComponent<HomeProps> = ({ userInfo }) => {
   useEffect(() => {
     getAllCards()
       .then((res) => setCards(res.data))
-      .catch((err) => console.log(err));
-      
-    if (userInfo.email){
+      .catch((err) => console.log(err));  
+      if (userInfo.email){
     getUserByid(userInfo.userId)
       .then((res) => setFavoriteCards(res.data.favCards))
-      .catch((err) => console.log(err));
-    }
+      .catch((err) => console.log(err));}
+    
   }, [dataUpdated, userInfo.email, userInfo.userId]);
 
   return (
@@ -109,7 +95,7 @@ const Home: FunctionComponent<HomeProps> = ({ userInfo }) => {
                         whileHover={{ scale: 1.1 }}
                         style={{ width: "80%" }}
                         className="btn btn-outline-primary"
-                        onClick={() => navigate(`/${card.id}`)}
+                        onClick={() => navigate(`/cards/${card.id}`)}
                       >
                         Click Here For More Details
                       </motion.button>
@@ -123,7 +109,7 @@ const Home: FunctionComponent<HomeProps> = ({ userInfo }) => {
                         {(userInfo.role === "admin" ||
                           userInfo.userId === card.ownerId) && (
         
-                          <DeleteModal
+                          <DeleteCardModal
                             cardId={card.id as number}
                             dataUpdated={dataUpdated}
                             setDataUpdated={setDataUpdated} 

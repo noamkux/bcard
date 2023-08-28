@@ -28,24 +28,41 @@ const Footer: FunctionComponent<FooterProps> = ({ userInfo }) => {
                   About Us
                 </NavLink>
               </p>
-              
-              {userInfo.email && (<>
-              <p>
-                <NavLink to="/favcards" className="text-reset">
-                  Favorite Cards
-                </NavLink>
-              </p>
-              <p>
-                <NavLink to="/mycards" className="text-reset">
-                  My Cards
-                </NavLink>
-              </p></>)}
+
+              {userInfo.email && (
+                <>
+                  <p>
+                    <NavLink to="/favcards" className="text-reset">
+                      Favorite Cards
+                    </NavLink>
+                  </p>
+
+                  {userInfo.role === "business" && (
+                    <p>
+                      <NavLink to="/mycards" className="text-reset">
+                        My Cards
+                      </NavLink>
+                    </p>
+                  )}
+                </>
+              )}
               {userInfo.role === "admin" && (
                 <p>
                   <NavLink to="/sandbox" className="text-reset">
                     Sandbox
                   </NavLink>
                 </p>
+              )}
+              {!userInfo && (
+                <>
+                  <NavLink to={"/register"} className="text-reset">
+                    <p>Sign-Up</p>
+                  </NavLink>
+
+                  <NavLink to={"/login"} className="text-reset">
+                    <p>Login</p>
+                  </NavLink>
+                </>
               )}
             </div>
             <div className="col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4">

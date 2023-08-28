@@ -125,9 +125,13 @@ input#floatingEmailInput {
     padding-left: 5px;
     padding-right: 5px;
   }
+
+  
   
   .cardDetailsImg {
-    margin-top: 300px;
-    width: 100%;
+    margin-top: 320px;
+    object-fit: cover !important; 
+    padding: 20px;
+    width: 100% !important;
   }
 }

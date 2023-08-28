@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import EditCardModal from "./EditCardModal";
 import { SiteTheme } from "../App";
 import { motion } from "framer-motion";
+import DeleteCardModal from "./DeleteCardModal";
 
 interface MyCardsProps {
   userInfo: any;
@@ -71,12 +72,11 @@ const MyCards: FunctionComponent<MyCardsProps> = ({ userInfo }) => {
                     />
                   </td>
                   <td>
-                    <motion.i
-                      className="ms-2 fa-solid fa-trash col-4"
-                      style={{ cursor: "pointer" }}
-                      onClick={() => handleDelete(card.id as number)}
-                      whileHover={{ scale: 1.1 }}
-                    ></motion.i>
+                  <DeleteCardModal
+                            cardId={card.id as number}
+                            dataUpdated={dataUpdated}
+                            setDataUpdated={setDataUpdated} 
+                        />
                   </td>
                 </tr>
               ))}

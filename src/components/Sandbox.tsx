@@ -1,11 +1,11 @@
 import { FunctionComponent, useContext, useEffect, useState } from "react";
 import User from "../interfaces/user";
-import { deleteUser, getAllUsers } from "../services/userServices";
+import {  getAllUsers } from "../services/userServices";
 import { getCardsByUserId } from "../services/cardService";
 import { SiteTheme } from "../App";
 import EditRoleModal from "./EditRoleModal";
 import { motion } from "framer-motion";
-import { Modal, Button } from "react-bootstrap";
+import DeleteUserModal from "./DeleteUserModal";
 
 interface SandboxProps {
   userInfo: any;
@@ -16,21 +16,6 @@ const Sandbox: FunctionComponent<SandboxProps> = ({ userInfo }) => {
   const [postedCards, setPostedCards] = useState<{ [key: number]: number }>({});
   let theme = useContext(SiteTheme);
   let [dataUpdated, setDataUpdated] = useState<boolean>(false);
-  let render = () => setDataUpdated(!dataUpdated);
-
-  const [show, setShow] = useState(false);
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
-
-  let handleDelete = (id: number) => {
-    deleteUser(id)
-      .then((res) => {
-        render();
-      })
-      .catch((err) => console.log(err));
-  };
-
-  console.log(userInfo);
 
   useEffect(() => {
     getAllUsers()
@@ -111,7 +96,12 @@ const Sandbox: FunctionComponent<SandboxProps> = ({ userInfo }) => {
                       </>
                     ) : (
                       <>
-                        <motion.i
+
+                      <DeleteUserModal
+                        userId={user.id as number}
+                        dataUpdated={dataUpdated}
+                        setDataUpdated={setDataUpdated}/>
+                        {/* <motion.i
                           className="ms-2 fa-solid fa-trash col-4"
                           style={{ cursor: "pointer" }}
                           onClick={() => handleShow()}
@@ -146,7 +136,7 @@ const Sandbox: FunctionComponent<SandboxProps> = ({ userInfo }) => {
                               Back
                             </Button>
                           </Modal.Body>
-                        </Modal>
+                        </Modal> */}
                       </>
                     )}
                   </td>

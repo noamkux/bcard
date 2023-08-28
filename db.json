@@ -75,6 +75,7 @@
       "imageURL": "",
       "imageAlt": "",
       "city": "bersheva",
+      "gender": "female",
       "zipCode": "",
       "state": "",
       "street": "yerushalyim",
@@ -83,9 +84,9 @@
       "country": "israel",
       "id": 1,
       "favCards": [
-        1,
-        2,
-        3
+        3,
+        6,
+        5
       ]
     }
   ],
@@ -297,25 +298,6 @@
       "houseNumber": "21",
       "zipcode": "28001",
       "postDate": "8-16-2023"
-    },
-    {
-      "email": "noam.kj@fninf.com",
-      "title": "as",
-      "subtitle": "sdsddd",
-      "description": "dwwdwdwdwdwdwdwdwdwdwdwd",
-      "country": "fnkenf",
-      "phone": "64484646464",
-      "businessImgURL": "./images/CardsImg/saltMaker.jpg",
-      "businessImgAlt": "a Gradner Working",
-      "city": "fnkeknfen",
-      "zipcode": "56464",
-      "state": "fninf",
-      "street": "kwndfk",
-      "houseNumber": "55",
-      "webSite": "nwifwfn.com",
-      "postDate": "24-8-2023",
-      "ownerId": 3,
-      "id": 14
     }
   ],
   "favorites": [

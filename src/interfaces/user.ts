@@ -14,7 +14,7 @@ export default interface User {
     city?: string;
     street?: string;
     houseNumber?: string;
-    zipCode?: string;
+    // zipCode?: string;
     imageAlt? : string,
     favCards? : number[]
   }

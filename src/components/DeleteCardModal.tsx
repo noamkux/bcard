@@ -1,10 +1,7 @@
-import { FunctionComponent, useContext, useEffect, useState } from "react";
+import { FunctionComponent, useState } from "react";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
-import User from "../interfaces/user";
-import { getUserByid, updateUserById } from "../services/userServices";
-import { successMsg, errorMsg, infoMsg } from "../services/feedbackService";
-import { SiteTheme } from "../App";
+import { successMsg, infoMsg } from "../services/feedbackService";
 import { motion } from "framer-motion";
 import { deleteCard } from "../services/cardService";
 
@@ -25,15 +22,14 @@ const EditRoleModal: FunctionComponent<EditRoleModalProps> = ({
   let handleDelete = (id: number) => {
     deleteCard(id)
       .then((res) => {
-        console.log(res);
         successMsg("Card deleted sucssesfully");
       })
       .catch((err) => {
         console.log(err);
         infoMsg("somthing went wrong");
       });
-      handleClose()
-      setDataUpdated(!dataUpdated);
+    handleClose();
+    setDataUpdated(!dataUpdated);
   };
 
   return (
@@ -42,7 +38,7 @@ const EditRoleModal: FunctionComponent<EditRoleModalProps> = ({
         className="fa-solid fa-lg fa-trash col-4"
         style={{ cursor: "pointer" }}
         onClick={handleShow}
-        whileHover={{ scale: 1.5 }}
+        whileHover={{ scale: 1.2 }}
       ></motion.i>
 
       <Modal
@@ -57,9 +53,10 @@ const EditRoleModal: FunctionComponent<EditRoleModalProps> = ({
         <Modal.Body>
           <Button
             variant="secondary"
-            className="mt-2 w-100"            
-        onClick={() => {handleDelete(cardId as number)}}
-
+            className="mt-2 w-100"
+            onClick={() => {
+              handleDelete(cardId as number);
+            }}
           >
             Delete
           </Button>

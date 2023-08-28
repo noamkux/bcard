@@ -10,6 +10,7 @@ import Card from "../interfaces/card";
 import * as yup from "yup";
 import { useFormik } from "formik";
 import { successMsg, errorMsg } from "../services/feedbackService";
+import { motion } from "framer-motion";
 
 interface EditCardModalProps {
   cardId: string;
@@ -118,11 +119,12 @@ const EditCardModal: FunctionComponent<EditCardModalProps> = ({
 
   return (
     <>
-      <i
+      <motion.i
         className="ms-2 fa-solid fa-file-pen"
         style={{ cursor: "pointer" }}
         onClick={handleShow}
-      ></i>
+        whileHover={{ scale: 1.2 }}
+      ></motion.i>
 
       <Modal
         show={show}

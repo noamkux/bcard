@@ -26,10 +26,15 @@ const NavBar: FunctionComponent<NavBarProps> = ({
   };
 
   useEffect(() => {
-    getUserByid(userInfo.userId)
-      .then((res) => setUserDetails(res.data))
-      .catch((err) => console.log(err));
+    if (userInfo.userId){
+      getUserByid(userInfo.userId)
+        .then((res) => setUserDetails(res.data))
+        .catch((err) => console.log(err));
+      }
+    
   }, [userInfo.userId]);
+
+  
 
   return (
     <>
@@ -133,14 +138,14 @@ const NavBar: FunctionComponent<NavBarProps> = ({
                 <NavLink className="nav-link" to={"/profile"}>
                   {userDetails?.gender === "male" ? (
                     <img
-                    alt="user profile pic"
+                      alt="user profile pic"
                       className="mx-2"
                       src="images/CardsImg/manProfile.png"
                       style={{ width: "30px", height: "30px" }}
                     ></img>
                   ) : (
                     <img
-                    alt="user profile pic"
+                      alt="user profile pic"
                       className="mx-2"
                       src="images\CardsImg\womanProfile.png"
                       style={{ width: "30px", height: "30px" }}
