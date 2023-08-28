@@ -86,8 +86,27 @@
       "favCards": [
         3,
         6,
-        5
+        5,
+        2
       ]
+    },
+    {
+      "email": "nlnl@gmail.com",
+      "password": "gufhfhjFJFVJ1314",
+      "firstName": "asasass",
+      "middleName": "dw",
+      "lastName": "dwdwdw",
+      "phone": "0528742569",
+      "imageURL": "",
+      "imageAlt": "",
+      "country": "use",
+      "city": "isr",
+      "gender": "female",
+      "state": "",
+      "street": "55",
+      "houseNumber": "5",
+      "role": "nonbusiness",
+      "id": 5
     }
   ],
   "cards": [
@@ -299,8 +318,5 @@
       "zipcode": "28001",
       "postDate": "8-16-2023"
     }
-  ],
-  "favorites": [
-    {}
   ]
 }

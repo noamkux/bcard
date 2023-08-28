@@ -1,9 +1,10 @@
-import { FunctionComponent, useState } from "react";
+import { FunctionComponent, useContext, useState } from "react";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import { successMsg, infoMsg } from "../services/feedbackService";
 import { motion } from "framer-motion";
 import { deleteCard } from "../services/cardService";
+import { SiteTheme } from "../App";
 
 interface EditRoleModalProps {
   cardId: number;
@@ -16,6 +17,8 @@ const EditRoleModal: FunctionComponent<EditRoleModalProps> = ({
   dataUpdated,
   setDataUpdated,
 }) => {
+  let theme = useContext(SiteTheme);
+  
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -46,6 +49,7 @@ const EditRoleModal: FunctionComponent<EditRoleModalProps> = ({
         onHide={handleClose}
         backdrop="static"
         keyboard={false}
+        className={`${theme}`}
       >
         <Modal.Header closeButton>
           <Modal.Title>Are You Sure you want to Delete This Card ?</Modal.Title>

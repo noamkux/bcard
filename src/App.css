@@ -60,6 +60,17 @@ input#floatingEmailInput {
   color: var(--text-color-secondery);
 }
 
+.show ~ .navbar-icons{
+  text-align: end;
+  width: 100% !important;
+}
+
+.fade.-dark.modal.show .modal-dialog,
+.fade.-dark.modal.show .modal-dialog .modal-content{
+  background-color: #27374d !important;
+  color: white !important;
+}
+
 .dark .hr {
   color: var(--text-color);
 }

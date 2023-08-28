@@ -4,8 +4,8 @@ import Modal from "react-bootstrap/Modal";
 import User from "../interfaces/user";
 import { getUserByid, updateUserById } from "../services/userServices";
 import { successMsg, errorMsg } from "../services/feedbackService";
-import { SiteTheme } from "../App";
 import { motion } from "framer-motion";
+import { SiteTheme } from "../App";
 
 interface EditRoleModalProps {
   userId: number;
@@ -19,11 +19,12 @@ const EditRoleModal: FunctionComponent<EditRoleModalProps> = ({
   setDataUpdated,
 }) => {
   const [show, setShow] = useState(false);
-  let theme = useContext(SiteTheme);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   const [userDetails, setUserDetails] = useState<User>();
   const [selectedRole, setSelectedRole] = useState<string>("");
+  let theme = useContext(SiteTheme);
+  
   const handleChangeRole = () => {
     if (userDetails) {
       const updatedUser: User = { ...userDetails, role: selectedRole };
@@ -34,7 +35,9 @@ const EditRoleModal: FunctionComponent<EditRoleModalProps> = ({
           successMsg(
             `${userDetails.firstName}  ${userDetails.lastName} role updated successfully to ${selectedRole}`
           );
-          const userInfo = JSON.parse(sessionStorage.getItem("userInfo") as string);
+          const userInfo = JSON.parse(
+            sessionStorage.getItem("userInfo") as string
+          );
           userInfo.role = selectedRole;
           sessionStorage.setItem("userInfo", JSON.stringify(userInfo));
           handleClose();
@@ -72,13 +75,12 @@ const EditRoleModal: FunctionComponent<EditRoleModalProps> = ({
         onHide={handleClose}
         backdrop="static"
         keyboard={false}
+        className={`${theme}`}
       >
-        <Modal.Header closeButton
-        >
-          
+        <Modal.Header closeButton>
           <Modal.Title>Edit {userDetails?.firstName} role</Modal.Title>
         </Modal.Header>
-        <Modal.Body>
+        <Modal.Body className="my-modal">
           <select
             className="form-select"
             aria-label="Default select example"

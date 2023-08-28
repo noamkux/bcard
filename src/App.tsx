@@ -32,7 +32,7 @@ function App() {
   );
   const [darkMode, setDarkMode] = useState<boolean>(false);
   return (
-    <div className={`App  ${darkMode ? "dark" : "light"}`}>
+    <div className={`App ${darkMode ? "dark" : "light"}`}>
       <SiteTheme.Provider value={darkMode ? themes.dark : themes.light}>
         <ToastContainer theme={`${darkMode ? "dark" : "light"}`} />
         <LoadScript googleMapsApiKey={`${process.env.REACT_APP_GOOGLE_API_KEY}`}>

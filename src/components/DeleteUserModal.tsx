@@ -1,7 +1,8 @@
 import { motion } from "framer-motion";
-import { FunctionComponent, useState } from "react";
+import { FunctionComponent, useContext, useState } from "react";
 import { Modal, Button } from "react-bootstrap";
 import { deleteUser } from "../services/userServices";
+import { SiteTheme } from "../App";
 
 interface DeleteUserModalProps {
   userId: number;
@@ -17,6 +18,8 @@ const DeleteUserModal: FunctionComponent<DeleteUserModalProps> = ({
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+  let theme = useContext(SiteTheme);
+  
 
   let handleDelete = (id: number) => {
     deleteUser(id)
@@ -40,6 +43,7 @@ const DeleteUserModal: FunctionComponent<DeleteUserModalProps> = ({
         onHide={handleClose}
         backdrop="static"
         keyboard={false}
+        className={`${theme}`}
       >
         <Modal.Header closeButton>
           <Modal.Title>Are You Sure you want to Delete This User?</Modal.Title>

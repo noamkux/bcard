@@ -44,18 +44,6 @@ const NavBar: FunctionComponent<NavBarProps> = ({
             BCARD
           </NavLink>
           <>
-            <button
-              className="navbar-toggler"
-              type="button"
-              data-bs-toggle="collapse"
-              data-bs-target="#navbarSupportedContent"
-              aria-controls="navbarSupportedContent"
-              aria-expanded="false"
-              aria-label="Toggle navigation"
-            >
-              <span className="navbar-toggler-icon"></span>
-            </button>
-
             <div
               className="collapse navbar-collapse"
               id="navbarSupportedContent"
@@ -100,7 +88,7 @@ const NavBar: FunctionComponent<NavBarProps> = ({
             </div>
           </>
 
-          <form className="d-flex" role="search">
+          <form className="d-flex justify-content-end navbar-icons" role="search">
             {userInfo.email && (
               <>
                 <button
@@ -162,6 +150,17 @@ const NavBar: FunctionComponent<NavBarProps> = ({
               style={{ cursor: "pointer", color: "white" }}
               title="Toggle Dark Mode"
             />
+            <button
+              className="navbar-toggler"
+              type="button"
+              data-bs-toggle="collapse"
+              data-bs-target="#navbarSupportedContent"
+              aria-controls="navbarSupportedContent"
+              aria-expanded="false"
+              aria-label="Toggle navigation"
+            >
+              <span className="navbar-toggler-icon"></span>
+            </button>
           </form>
         </div>
       </nav>

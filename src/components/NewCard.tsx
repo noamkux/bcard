@@ -62,7 +62,7 @@ const NewCard: FunctionComponent<NewCardProps> = ({ userInfo }) => {
         ownerId: userInfo.userId,
       })
         .then((res) => {
-          successMsg(`card number ${res.data.id} has added to your cards`);
+          successMsg(`card ${res.data.title} has added to your cards`);
           navigate("/");
         })
         .catch((err) => {
@@ -144,7 +144,7 @@ const NewCard: FunctionComponent<NewCardProps> = ({ userInfo }) => {
                 onBlur={formik.handleBlur}
               />
 
-              <label htmlFor="floatingInputImageURL">image URL</label>
+              <label htmlFor="floatingInputImageURL">Image URL</label>
             </div>
             <div className=" g-2 form-floating col-6">
               <input
@@ -158,7 +158,7 @@ const NewCard: FunctionComponent<NewCardProps> = ({ userInfo }) => {
                 onBlur={formik.handleBlur}
               ></input>
 
-              <label htmlFor="businessImageAlt">image ALT</label>
+              <label htmlFor="businessImageAlt">Image Description</label>
             </div>
           </div>
 

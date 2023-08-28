@@ -1,16 +1,14 @@
-import { FunctionComponent, useEffect } from "react";
+import { FunctionComponent, useContext, useEffect } from "react";
 import { useState } from "react";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
-import {
-  getCardById,
-  updateCardByid,
-} from "../services/cardService";
+import { getCardById, updateCardByid } from "../services/cardService";
 import Card from "../interfaces/card";
 import * as yup from "yup";
 import { useFormik } from "formik";
-import { successMsg, errorMsg } from "../services/feedbackService";
+import { successMsg } from "../services/feedbackService";
 import { motion } from "framer-motion";
+import { SiteTheme } from "../App";
 
 interface EditCardModalProps {
   cardId: string;
@@ -25,6 +23,7 @@ const EditCardModal: FunctionComponent<EditCardModalProps> = ({
   dataUpdated,
   setDataUpdated,
 }) => {
+  let theme = useContext(SiteTheme);
   const date = new Date();
   let day = date.getDate();
   let month = date.getMonth() + 1;
@@ -70,7 +69,7 @@ const EditCardModal: FunctionComponent<EditCardModalProps> = ({
     },
     validationSchema: yup.object({
       email: yup.string().required().email("Invalid email"),
-      title: yup.string().required(),
+      title: yup.string().required().max(50).min(2),
       subtitle: yup
         .string()
         .required()
@@ -78,7 +77,7 @@ const EditCardModal: FunctionComponent<EditCardModalProps> = ({
       description: yup
         .string()
         .min(20, "Too short! description should be at least 20 characters"),
-      phone: yup.string().required().min(2),
+      phone: yup.string().required().min(10),
       businessImgURL: yup.string().min(2),
       businessImgAlt: yup.string().min(2),
       state: yup.string().min(2),
@@ -86,7 +85,7 @@ const EditCardModal: FunctionComponent<EditCardModalProps> = ({
       city: yup.string().min(2).required(),
       houseNumber: yup.number().required().typeError("A number is required"),
       zipcode: yup.number().min(2),
-      website: yup.string(),
+      website: yup.string()
     }),
     enableReinitialize: true,
     onSubmit: (values: Card) => {
@@ -94,13 +93,12 @@ const EditCardModal: FunctionComponent<EditCardModalProps> = ({
         ...values,
         postDate: currentDate,
         ownerId: userInfo.userId,
-      }
-      )
+      })
         .then((res) => console.log(res.data))
         .catch((err) => console.log(err));
-        
-        successMsg(values.title + " Card updated successfully")
-        setDataUpdated(!dataUpdated)
+
+      successMsg(values.title + " Card updated successfully");
+      setDataUpdated(!dataUpdated);
     },
   });
 
@@ -131,6 +129,7 @@ const EditCardModal: FunctionComponent<EditCardModalProps> = ({
         onHide={handleClose}
         backdrop="static"
         keyboard={false}
+        className={`${theme}`}
       >
         <Modal.Header closeButton>
           <Modal.Title>Edit {currentCard?.title} card</Modal.Title>

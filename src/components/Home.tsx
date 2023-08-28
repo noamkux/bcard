@@ -113,6 +113,7 @@ const Home: FunctionComponent<HomeProps> = ({ userInfo }) => {
                             cardId={card.id as number}
                             dataUpdated={dataUpdated}
                             setDataUpdated={setDataUpdated} 
+                            
                         />)}
                         {userInfo.email &&
                           (favoritesCards?.includes(card.id as number) ? (

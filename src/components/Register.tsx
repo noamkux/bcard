@@ -56,7 +56,11 @@ const Register: FunctionComponent<RegisterProps> = ({
         .string()
         .required()
         .min(2, "Too short! last Name should be at least 2 characters"),
-      phone: yup.string().required().min(2),
+      phone: yup
+        .string()
+        .required()
+        .min(9, "phone must have at least 9 digits")
+        .max(10, "phone must have at most 10 digits"),
       imageURL: yup.string(),
       imageAlt: yup.string(),
       state: yup.string(),
@@ -219,7 +223,7 @@ const Register: FunctionComponent<RegisterProps> = ({
                 onBlur={formik.handleBlur}
               />
 
-              <label htmlFor="floatingInputImageURL">image URL</label>
+              <label htmlFor="floatingInputImageURL">Image URL</label>
             </div>
             <div className=" g-2 form-floating col-6">
               <input
@@ -233,7 +237,7 @@ const Register: FunctionComponent<RegisterProps> = ({
                 onBlur={formik.handleBlur}
               ></input>
 
-              <label htmlFor="floatingInputImageALT">image ALT</label>
+              <label htmlFor="floatingInputImageALT">Image Description</label>
             </div>
           </div>
           <div className="row mb-3">
@@ -335,9 +339,8 @@ const Register: FunctionComponent<RegisterProps> = ({
                 className="form-select"
                 aria-label="Default select example"
                 onChange={formik.handleChange}
-                value={(formik.values.gender)}
+                value={formik.values.gender}
                 onBlur={formik.handleBlur}
-                defaultValue={""}
                 name="gender"
               >
                 <option value={""}>Open this select menu</option>
